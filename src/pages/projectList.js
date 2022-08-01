@@ -1,3 +1,5 @@
+import { appendSelectedProjectsTasksToMain } from './generateMain'
+
 export const projectList = ['project 1', 'project 2', 'project 3']
 
 export class Project {
@@ -14,8 +16,8 @@ export class Project {
         return this.taskList
     }
 
-    appendSelectedProjectsTasksToMain() {
-        console.log(this.taskList)      // tasks from specific projects have to be iterated and appended to the main page.
+    sendSelectedProjectsTasks() {
+        appendSelectedProjectsTasksToMain(this.taskList)      // tasks from specific projects have to be iterated and appended to the main page.
     }
 
 }

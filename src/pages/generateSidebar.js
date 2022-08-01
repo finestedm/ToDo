@@ -22,7 +22,7 @@ function createProjectButton(projectObject) {
     const projectHolder = document.createElement('li');
     const projectButton = document.createElement('button');
     projectButton.innerText = projectObject.name;
-    projectButton.addEventListener('click', () => projectObject.appendSelectedProjectsTasksToMain()) // this event listener for now only console logs tasks added to 'this' specific project. Later show it as list of tasks
+    projectButton.addEventListener('click', () => projectObject.sendSelectedProjectsTasks()) // this event listener for now only console logs tasks added to 'this' specific project. Later show it as list of tasks
     projectHolder.append(projectButton);
     return projectHolder;
 }
