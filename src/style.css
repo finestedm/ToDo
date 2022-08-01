@@ -133,3 +133,32 @@ table {
 
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap');
 
+#content {
+    height: 100vh;
+    width: 100%;
+    background-color: #19212e;
+}
+
+.main-window {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
+    grid-template-rows: 5rem 1fr;
+    grid-template-columns: 15ch 1fr;
+    height: 100%;
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+header {
+    grid-area: header;
+    width: 100%;
+    background-color: #232e41;
+}
+
+main {
+    grid-area: main;
+}
