@@ -1,7 +1,6 @@
 import generateSidebar from './generateSidebar'
 import generateMain from './generateMain'
 
-
 export default function mainWindowGenerate() {
     const mainWindow = document.createElement('div');
     mainWindow.classList.add('main-window');
@@ -16,5 +15,4 @@ export function generateHeader() {
     header.append(headerTitle);
     return header;
 }
-
 

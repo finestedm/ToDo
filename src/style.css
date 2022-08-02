@@ -133,6 +133,17 @@ table {
 
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap');
 
+*,
+body {
+    font-family: 'Poppins', sans-serif;
+    color: white
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+}
+
+
 #content {
     height: 100vh;
     width: 100%;
@@ -161,4 +172,25 @@ header {
 
 main {
     grid-area: main;
+}
+
+button.project,
+button.task {
+    height: 50px;
+    width: 50px;
+}
+
+.edit-button {
+    background-image: url('./images/edit.svg');
+    background-size: 100%;
+}
+
+.delete-button {
+    background-image: url('./images/bin.svg');
+    background-size: 100%;
+}
+
+.due-button {
+    background-image: url('./images/calendar.svg');
+    background-size: 100%;
 }
