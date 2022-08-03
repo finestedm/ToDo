@@ -1,12 +1,12 @@
 import { Task, removeTask, askForNewTaskName, createTaskDiv } from './tasks'
-import { removeProjectTasksFromMain } from './projects'
+import { removeProjectTasksFromMain, projectList } from './projects'
 
 export default function generateMain() {
     const main = document.createElement('main');
     return main;
 }
 
-export function appendSelectedProjectsTasksToMain(projectObject) {  //entire projects object is send here
+export function appendSelectedProjectsTasksToMain(projectObject = projectList[0]) {  //entire projects object is send here. It should be appended with first project tasks but does not work. Order problem?
     removeProjectTasksFromMain();   // clears Main from different projects tasks
     const main = document.querySelector('main');
     const listOfTasks = document.createElement('ul');

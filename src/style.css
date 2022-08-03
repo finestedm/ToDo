@@ -162,7 +162,7 @@ button {
         "header header"
         "sidebar main";
     grid-template-rows: 5rem 1fr;
-    grid-template-columns: 15ch 1fr;
+    grid-template-columns: 15rem 1fr;
     height: 100%;
 }
 
@@ -170,10 +170,30 @@ button {
     grid-area: sidebar;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    /* height: 100%; */
+    padding: 1rem;
     overflow: hidden;
+    background-color: hsl(217, 30%, 15%);
 }
 
+.sidebar>h2 {
+    font-size: 1.35rem;
+}
+
+.sidebar>ul button {
+    background-color: transparent;
+    border: none;
+}
+
+#project-list>li {
+    padding: 1rem;
+    background-color: #ffffff09;
+    transition: all .2s ease-in-out;
+}
+
+#project-list>li:hover {
+    background-color: #ffffff15;
+}
 
 .sidebar>ul {
     overflow-y: scroll;
@@ -183,8 +203,7 @@ button {
 #new-project-button,
 #new-task-button {
     flex: 1 0 50px;
-    background: #ffffff10;
-    opacity: .5;
+    background-color: #ffffff09;
     transition: all .2s ease-in-out;
     background-image: url(./images/plus.svg);
     background-size: 2rem;
@@ -195,7 +214,7 @@ button {
 
 #new-project-button:hover,
 #new-task-button:hover {
-    opacity: 1;
+    background-color: #ffffff15;
 }
 
 main>ul {
@@ -222,6 +241,19 @@ header {
     grid-area: header;
     width: 100%;
     background-color: #232e41;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow: 0 10px 25px #0000002c;
+    font-size: 2.4rem;
+    letter-spacing: -3px;
+}
+
+#header--logo {
+    fill: white;
+    height: 2.4rem;
+
 }
 
 main {
@@ -230,8 +262,9 @@ main {
 
 button.project,
 button.task {
-    height: 50px;
-    width: 50px;
+    height: 1rem;
+    background-repeat: no-repeat;
+    width: 1rem;
 }
 
 .edit-button {

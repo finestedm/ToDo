@@ -21,6 +21,7 @@
   "homepage": "https://github.com/finestedm/ToDo#readme",
   "devDependencies": {
     "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
     "webpack-cli": "^4.10.0",
