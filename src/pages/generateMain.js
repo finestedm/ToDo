@@ -1,3 +1,6 @@
+import { Task, removeTask, askForNewTaskName, createTaskDiv } from './tasks'
+import { removeProjectTasksFromMain } from './projects'
+
 export default function generateMain() {
     const main = document.createElement('main');
     return main;
@@ -7,36 +10,20 @@ export function appendSelectedProjectsTasksToMain(projectObject) {  //entire pro
     removeProjectTasksFromMain();   // clears Main from different projects tasks
     const main = document.querySelector('main');
     const listOfTasks = document.createElement('ul');
-    listOfTasks.setAttribute('id', projectObject.name)
+    listOfTasks.setAttribute('id', 'task-list')
     for (let i = 0; i < projectObject.taskList.length; i++) {
-        const taskDiv = createTaskDiv(projectObject.taskList[i]);
+        const taskDiv = createTaskDiv(projectObject.taskList[i], projectObject);
         listOfTasks.append(taskDiv);
     }
+
+    const newTaskButton = document.createElement('button');
+    newTaskButton.setAttribute('id', 'new-task-button');
+    newTaskButton.addEventListener('click', () => askForNewTaskName(projectObject));
+    listOfTasks.append(newTaskButton)
+
     main.append(listOfTasks);
 }
 
-function createTaskDiv(taskObject) {      //entire task object is send here
-    const taskHolder = document.createElement('li');
-    const taskButton = document.createElement('button');
-    taskButton.innerText = taskObject.name;
-    taskButton.addEventListener('click', () => console.log('eee'));
-
-    const taskEditButton = document.createElement('button');
-    taskEditButton.classList.add('task', 'edit-button');
-    taskEditButton.addEventListener('click', () => console.log('edit action'));
-
-    const taskDeleteButton = document.createElement('button');
-    taskDeleteButton.classList.add('task', 'delete-button');
-    taskDeleteButton.addEventListener('click', () => console.log('delete action'));
-
-    const taskDueDateButton = document.createElement('button');
-    taskDueDateButton.classList.add('task', 'due-button');
-    taskDueDateButton.addEventListener('click', () => console.log('Set Due Date action'));
-
-    taskHolder.append(taskButton, taskEditButton, taskDeleteButton, taskDueDateButton);
-
-    return taskHolder;
-}
 
 export function checkIfSelectedProjectIsAlreadyShown(projectToCheck) {
     let currentlySelectedProject = null;
@@ -51,10 +38,6 @@ export function checkIfSelectedProjectIsAlreadyShown(projectToCheck) {
 
 }
 
-function removeProjectTasksFromMain() {
-    try {
-        (document.querySelector('main>ul')).remove();
-    } catch (e) {
-        { }
-    }
-}
+
+
+

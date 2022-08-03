@@ -143,9 +143,15 @@ button {
     font-family: 'Poppins', sans-serif;
 }
 
+#body {
+    height: 100vh;
+    max-height: 100vh;
+
+}
 
 #content {
     height: 100vh;
+    max-height: 100vh;
     width: 100%;
     background-color: #19212e;
 }
@@ -162,6 +168,54 @@ button {
 
 .sidebar {
     grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.sidebar>ul {
+    overflow-y: scroll;
+    flex: 0 1 auto;
+}
+
+#new-project-button,
+#new-task-button {
+    flex: 1 0 50px;
+    background: #ffffff10;
+    opacity: .5;
+    transition: all .2s ease-in-out;
+    background-image: url(./images/plus.svg);
+    background-size: 2rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}
+
+#new-project-button:hover,
+#new-task-button:hover {
+    opacity: 1;
+}
+
+main>ul {
+    display: flex;
+    flex-direction: column;
+}
+
+main>ul>li {
+    display: flex;
+    justify-content: center;
+}
+
+main>ul>li>button:first-child {
+    margin-right: auto;
+    flex: 1 0 auto;
+}
+
+main>ul>li>button:not(:first-child) {
+    margin-right: auto;
+    flex: 0 0 50px;
 }
 
 header {
