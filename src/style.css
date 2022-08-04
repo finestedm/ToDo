@@ -178,17 +178,36 @@ button {
 
 .sidebar>h2 {
     font-size: 1.35rem;
+    margin: 1rem 0 .5rem 0;
 }
 
 .sidebar>ul button {
-    background-color: transparent;
     border: none;
+    margin: .25rem;
+}
+
+.sidebar>ul button:first-child {
+    background-color: transparent;
+}
+
+.active-task-counter {
+    margin-right: auto;
+    color:hsl(143, 53%, 55%) ;
+    font-weight: 700;
+    font-size: .7rem;
+    align-self: start;
+    /* this color should be changing according to number of tasks */
 }
 
 #project-list>li {
-    padding: 1rem;
-    background-color: #ffffff09;
+    display: flex;
+    align-items: center;
+    padding: 1rem .5rem;
+    background-color: #ffffff00;
     transition: all .2s ease-in-out;
+    border: 1px solid #131a24;
+    margin: .5rem 0;
+    border-radius: .25rem;
 }
 
 #project-list>li:hover {
@@ -200,41 +219,70 @@ button {
     flex: 0 1 auto;
 }
 
+button.task,
+button.project {
+    opacity: .25;
+}
+
+button.task:hover,
+button.project:hover {
+    opacity: 1;
+}
+
 #new-project-button,
 #new-task-button {
     flex: 1 0 50px;
-    background-color: #ffffff09;
+    background-color: transparent;
     transition: all .2s ease-in-out;
-    background-image: url(./images/plus.svg);
-    background-size: 2rem;
-    background-repeat: no-repeat;
-    background-position: center;
+    background: url(./images/plus.svg) no-repeat center;
+    mask-size: 2rem;
     border: none;
+    border: 1px solid #131a24;
+    margin: .5rem 0;
+    border-radius: .25rem;
+    opacity: .25;
 }
 
 #new-project-button:hover,
 #new-task-button:hover {
+    opacity: 1;
     background-color: #ffffff15;
+
+
 }
 
 main>ul {
     display: flex;
     flex-direction: column;
+    margin: 1rem;
+
 }
 
 main>ul>li {
+    padding: 1rem .5rem;
     display: flex;
     justify-content: center;
+    border: 1px solid #131a24;
+    border-radius: .25rem;
+    margin: .5rem 0;
 }
 
-main>ul>li>button:first-child {
+main>ul>li:hover {
+    background-color: #ffffff15;
+}
+
+main>ul>li>button:nth-child(2) {
     margin-right: auto;
     flex: 1 0 auto;
+    background-color: transparent;
+    border: none;
+
 }
 
 main>ul>li>button:not(:first-child) {
     margin-right: auto;
-    flex: 0 0 50px;
+    margin: .25rem;
+    border: none;
 }
 
 header {
@@ -248,6 +296,8 @@ header {
     box-shadow: 0 10px 25px #0000002c;
     font-size: 2.4rem;
     letter-spacing: -3px;
+    box-shadow: 0 7px 10px #00000015;
+    z-index: 1;
 }
 
 #header--logo {
@@ -262,22 +312,22 @@ main {
 
 button.project,
 button.task {
-    height: 1rem;
+    height: 1.5rem;
     background-repeat: no-repeat;
-    width: 1rem;
+    width: 1.5rem;
 }
 
 .edit-button {
-    background-image: url('./images/edit.svg');
-    background-size: 100%;
+    background: url('./images/edit.svg') center;
+    background-size: 60%;
 }
 
 .delete-button {
-    background-image: url('./images/bin.svg');
-    background-size: 100%;
+    background: url('./images/bin.svg') center;
+    background-size: 60%;
 }
 
 .due-button {
-    background-image: url('./images/calendar.svg');
-    background-size: 100%;
+    background: url('./images/calendar.svg') center;
+    background-size: 60%;
 }
