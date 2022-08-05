@@ -114,7 +114,6 @@ export function getActiveTaskCount(projectObject) {
     for (let i = 0; i < projectObject.taskList.length; i++) {
         projectObject.taskList[i].isComplete ? {} : activeTaskCount++
     }
-    console.log(activeTaskCount)
     return activeTaskCount
 };
 

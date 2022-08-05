@@ -192,7 +192,7 @@ button {
 
 .active-task-counter {
     margin-right: auto;
-    color:hsl(143, 53%, 55%) ;
+    color: #4fc97e;
     font-weight: 700;
     font-size: .7rem;
     align-self: start;
@@ -221,12 +221,21 @@ button {
 
 button.task,
 button.project {
+    padding: .8rem;
+    margin: 0;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+}
+
+li:hover button.task,
+li:hover button.project {
     opacity: .25;
 }
 
-button.task:hover,
-button.project:hover {
+li:hover button.task:hover,
+li:hover button.project:hover {
     opacity: 1;
+    background-size: 75%;
 }
 
 #new-project-button,
@@ -235,7 +244,7 @@ button.project:hover {
     background-color: transparent;
     transition: all .2s ease-in-out;
     background: url(./images/plus.svg) no-repeat center;
-    mask-size: 2rem;
+    background-size: 2rem;
     border: none;
     border: 1px solid #131a24;
     margin: .5rem 0;
@@ -247,8 +256,7 @@ button.project:hover {
 #new-task-button:hover {
     opacity: 1;
     background-color: #ffffff15;
-
-
+    background-size: 2.5rem;
 }
 
 main>ul {
@@ -319,15 +327,15 @@ button.task {
 
 .edit-button {
     background: url('./images/edit.svg') center;
-    background-size: 60%;
+    background-size: 50%;
 }
 
 .delete-button {
     background: url('./images/bin.svg') center;
-    background-size: 60%;
+    background-size: 50%;
 }
 
 .due-button {
     background: url('./images/calendar.svg') center;
-    background-size: 60%;
+    background-size: 50%;
 }

@@ -1,6 +1,8 @@
 import { getTime, format } from 'date-fns'
 import { appendSelectedProjectsTasksToMain } from './generateMain';
 import { regenerateProjectList } from './generateSidebar';
+import { hideActiveTaskCount } from './universalDOMmanipulations'
+
 
 export class Task {
     constructor(name, projectNumber) {
@@ -26,6 +28,7 @@ export function removeTask(taskObject, projectObject) {
     let indexOfSearchedTask = projectObject.taskList.indexOf(taskObject)
     projectObject.taskList.splice(indexOfSearchedTask, 1)
     regenerateTaskList(projectObject)
+
 }
 
 export function createNewTask(projectObject) {
@@ -43,6 +46,8 @@ export function regenerateTaskList(projectObject) {
         { }
     }
     (appendSelectedProjectsTasksToMain(projectObject))
+    regenerateProjectList(projectObject)
+    console.log('renegerate in')
 }
 
 export function createTaskDiv(taskObject, projectObject) {      //entire task object is send here
@@ -77,8 +82,9 @@ export function createTaskDiv(taskObject, projectObject) {      //entire task ob
 
 function switchTaskComplete(taskObject, projectObject) {
     taskObject.isComplete ? taskObject.isComplete = false : taskObject.isComplete = true;
-    regenerateProjectList(projectObject);
+    // moveTaskToTheEndOfArray(taskObject, projectObject)
     regenerateTaskList(projectObject);
+    hideActiveTaskCount()
 }
 
 function editTask() {
@@ -92,3 +98,8 @@ function showTaskEditWindow() {
     listOfTaskParameters.setAttribute('id', 'list-of-task-parameters')
 
 }
+
+// function moveTaskToTheEndOfArray(taskObject, projectObject) {
+//     projectObject.taskList.indexOf(taskObject)
+//     console.log('yes')
+// }
