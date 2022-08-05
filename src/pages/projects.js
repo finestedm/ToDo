@@ -35,9 +35,10 @@ export class Project {
 
 export function createProjectDiv(projectObject) {
     const projectHolder = document.createElement('li');
-    const projectButton = document.createElement('button');
+    projectHolder.addEventListener('click', () => projectObject.sendSelectedProjectsTasks()) // this event listener for now only console logs tasks added to 'this' specific project. Later show it as list of tasks
+
+    const projectButton = document.createElement('h3');
     projectButton.innerText = projectObject.name;
-    projectButton.addEventListener('click', () => projectObject.sendSelectedProjectsTasks()) // this event listener for now only console logs tasks added to 'this' specific project. Later show it as list of tasks
 
     const projectEditButton = document.createElement('button');
     projectEditButton.classList.add('project', 'edit-button');

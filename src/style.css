@@ -136,7 +136,8 @@ table {
 *,
 body {
     font-family: 'Poppins', sans-serif;
-    color: white
+    color: white;
+    font-size: 1rem;
 }
 
 button {
@@ -173,7 +174,13 @@ button {
     /* height: 100%; */
     padding: 1rem;
     overflow: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     background-color: hsl(217, 30%, 15%);
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
 }
 
 .sidebar>h2 {
@@ -186,7 +193,9 @@ button {
     margin: .25rem;
 }
 
-.sidebar>ul button:first-child {
+.sidebar>ul h3 {
+    font-size: 1rem;
+    margin: .25rem;
     background-color: transparent;
 }
 
@@ -216,7 +225,13 @@ button {
 
 .sidebar>ul {
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     flex: 0 1 auto;
+}
+
+.sidebar>ul::-webkit-scrollbar {
+    display: none;
 }
 
 button.task,
@@ -270,6 +285,7 @@ main>ul>li {
     padding: 1rem .5rem;
     display: flex;
     justify-content: center;
+    align-items: center;
     border: 1px solid #131a24;
     border-radius: .25rem;
     margin: .5rem 0;
@@ -279,15 +295,21 @@ main>ul>li:hover {
     background-color: #ffffff15;
 }
 
-main>ul>li>button:nth-child(2) {
-    margin-right: auto;
-    flex: 1 0 auto;
-    background-color: transparent;
-    border: none;
-
+main>ul>li>.complete-input {
+    scale: 1
 }
 
-main>ul>li>button:not(:first-child) {
+main>ul>li>.complete-input:hover {
+    scale: 1.5
+}
+
+main>ul>li>h3 {
+    font-size: 1rem;
+    margin-right: auto;
+    margin-left: 2rem;
+}
+
+main>ul>li>button {
     margin-right: auto;
     margin: .25rem;
     border: none;
@@ -339,3 +361,109 @@ button.task {
     background: url('./images/calendar.svg') center;
     background-size: 50%;
 }
+
+#edit-window-holder {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: #00000044;
+}
+
+#edit-window {
+    background-color: #232e41;
+    width: max(50%, 500px);
+    padding: 2rem;
+    border-radius: .5rem;
+    ;
+}
+
+#edit-window input,
+#edit-window select {
+    position: relative;
+    appearance: none;
+    border: 1px solid #131a24;
+    background-color: #131a24;
+    padding: 1rem;
+    border-radius: .25rem;
+}
+
+#edit-window #list-of-task-parameters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#edit-window #list-of-task-parameters>li {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+#edit-window #list-of-task-parameters>li>label,
+#edit-window #list-of-task-parameters>li legend {
+    font-size: .8rem;
+    font-weight: 700;
+    word-spacing: 3px;
+    margin-bottom: .4rem;
+
+}
+
+#edit-window #submit-and-cancel-button-holder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#edit-window #submit-and-cancel-button-holder>button {
+    width: 100%;
+    appearance: none;
+    font-size: 1.25rem;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+#edit-window #submit-and-cancel-button-holder>button {
+    width: 100%;
+    appearance: none;
+    font-size: 1.25rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: none;
+    border-radius: .25rem;
+    transition: all .3s ease-out;
+}
+
+#edit-window #submit-and-cancel-button-holder #submit-button {
+    background-color: #b5d8cc;
+    color: #187254
+}
+
+#edit-window #submit-and-cancel-button-holder #submit-button:hover {
+    /* border: 3px solid #187254; */
+    box-shadow: 0px 0px 10px 2px #187254;
+}
+
+#edit-window #submit-and-cancel-button-holder #cancel-button {
+    background-color: #d7cdd2;
+    color: #884661
+}
+
+#edit-window #submit-and-cancel-button-holder #cancel-button:hover {
+    /* border: 3px solid #187254; */
+    box-shadow: 0px 0px 10px 2px #884661;
+}
+
+
+/* #edit-window input {
+    appearance: none;
+    border: 1px solid #131a24;
+    background-color: #131a24;
+} */

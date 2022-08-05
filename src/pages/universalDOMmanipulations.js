@@ -9,3 +9,5 @@ export function hideActiveTaskCount() {
 function changeActiveTaskCounterColor(projectCounter) {
     projectCounter.innerHTML === '(0)' ? projectCounter.style.color = 'gray' : projectCounter.style.color = '#4fc97e'
 }
+
+document.querySelector('body').addEventListener('keydown', (e) => { e.key === 'Escape' ? (document.getElementById('edit-window-holder')).remove() : {} }) // add try/catch 
