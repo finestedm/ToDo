@@ -1,5 +1,6 @@
-import { projectList, Project, deleteProject } from './projects';
+import { projectList, Project, deleteProject, editProjectName, createProjectDiv } from './projects';
 import { regenerateTaskList } from './tasks';
+import { hideActiveTaskCount } from './universalDOMmanipulations'
 
 export default function generateSidebar() {
 
@@ -14,7 +15,6 @@ export default function generateSidebar() {
 
     sidebar.append(sidebarTitle, iterateThroughProjectList(), newProjectButton);
 
-    console.log(projectList)
     return sidebar;
 
 
@@ -28,25 +28,6 @@ function iterateThroughProjectList() {
         listOfProjects.appendChild(projectDiv);
     }
     return listOfProjects
-}
-
-function createProjectDiv(projectObject) {
-    const projectHolder = document.createElement('li');
-    const projectButton = document.createElement('button');
-    projectButton.innerText = projectObject.name;
-    projectButton.addEventListener('click', () => projectObject.sendSelectedProjectsTasks()) // this event listener for now only console logs tasks added to 'this' specific project. Later show it as list of tasks
-
-    const projectEditButton = document.createElement('button');
-    projectEditButton.classList.add('project', 'edit-button');
-    projectEditButton.addEventListener('click', () => console.log('this'));
-
-    const projectDeleteButton = document.createElement('button');
-    projectDeleteButton.classList.add('project', 'delete-button');
-    projectDeleteButton.addEventListener('click', () => deleteProject(projectObject));
-
-    projectHolder.append(projectButton, projectEditButton, projectDeleteButton);
-
-    return projectHolder;
 }
 
 function askForNewProjectName() {
@@ -65,6 +46,6 @@ export function regenerateProjectList() {
     }
     let sidebar = document.querySelector('.sidebar')    // we target sidebar
     sidebar.insertBefore(iterateThroughProjectList(), document.getElementById('new-project-button')) // and repeat process of creating div per task via iterateThroughProjectList() and insert it before the last item (add project button)
-    
 
+    hideActiveTaskCount()
 }
