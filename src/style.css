@@ -390,6 +390,16 @@ button.task {
     background-color: #131a24;
     padding: 1rem;
     border-radius: .25rem;
+    transition: all .1s ease-out;
+}
+
+#edit-window input:hover,
+#edit-window select:hover,
+#edit-window input:focus,
+#edit-window select:focus {
+    border: 1px solid #2357a0;
+    background-color: #1e2a3a;
+
 }
 
 #edit-window #list-of-task-parameters {
@@ -438,7 +448,7 @@ button.task {
     margin: 1rem 0;
     border: none;
     border-radius: .25rem;
-    transition: all .3s ease-out;
+    transition: all .1s ease-out;
 }
 
 #edit-window #submit-and-cancel-button-holder #submit-button {
@@ -467,3 +477,54 @@ button.task {
     border: 1px solid #131a24;
     background-color: #131a24;
 } */
+
+#list-of-task-parameters fieldset {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#list-of-task-parameters fieldset label {
+    flex: 0 1 70px;
+    padding: 1rem;
+    border-radius: .25rem;
+    border: 1px solid #131a24;
+    background-color: #131a24;
+
+}
+
+#list-of-task-parameters fieldset label:hover,
+#list-of-task-parameters fieldset label:focus {
+    border: 1px solid #2357a0;
+    background-color: #1e2a3a;
+}
+
+#list-of-task-parameters fieldset input:checked +label {
+    border: 1px solid #2357a0;
+    background-color: #1a2533;
+}
+
+label>input {
+    /* display: none; */
+}
+
+#list-of-task-parameters fieldset img {
+    width: 100%;
+    height: 100%;
+}
+
+#flag-0 {
+    filter: brightness(0) saturate(100%) invert(25%) sepia(11%) saturate(1284%) hue-rotate(180deg) brightness(96%) contrast(86%);
+}
+
+#flag-1 {
+    filter: brightness(0) saturate(100%) invert(76%) sepia(37%) saturate(926%) hue-rotate(349deg) brightness(103%) contrast(95%);
+}
+
+#flag-2 {
+    filter: brightness(0) saturate(100%) invert(42%) sepia(74%) saturate(2353%) hue-rotate(336deg) brightness(101%) contrast(89%);
+}
+
+#flag-3 {
+    filter: brightness(0) saturate(100%) invert(19%) sepia(87%) saturate(4103%) hue-rotate(334deg) brightness(90%) contrast(94%);
+}

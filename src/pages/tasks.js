@@ -3,6 +3,7 @@ import { appendSelectedProjectsTasksToMain } from './generateMain';
 import { regenerateProjectList } from './generateSidebar';
 import { projectList } from './projects';
 import { hideActiveTaskCount } from './universalDOMmanipulations'
+import flagImage from '../images/flag.svg'
 
 
 export class Task {
@@ -142,15 +143,19 @@ function getTaskFlagDiv(taskObject) {
     taskFlagFieldsetLegend.innerHTML = 'Choose flag:'
     taskFlagFieldset.append(taskFlagFieldsetLegend);
     taskFlag.append(taskFlagFieldset);
-    for (let i = 0; i <= 4; i++) {
+    for (let i = 0; i <= 3; i++) {
         const taskFlagInputLabel = document.createElement('Label');
-        taskFlagInputLabel.innerText = i;
+        taskFlagInputLabel.setAttribute('for', `task-flag-${i}`)
+        const flagImg = document.createElement('img')
+        flagImg.setAttribute('src', flagImage)
+        flagImg.setAttribute('id', `flag-${i}`)
         const taskFlagInput = document.createElement('input');
         taskFlagInput.setAttribute('type', 'radio');
-        taskFlagInput.setAttribute('name', 'task-flag');
+        taskFlagInput.setAttribute('name', `task-flag`);
+        taskFlagInput.setAttribute('id', `task-flag-${i}`);
         taskObject.flag === i ? taskFlagInput.checked = true : {};
         taskFlagInputLabel.append(taskFlagInput)
-        taskFlagFieldset.append(taskFlagInputLabel)
+        taskFlagFieldset.append(taskFlagInputLabel, flagImg)
     }
     return taskFlag;
 }
