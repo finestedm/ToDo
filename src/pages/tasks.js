@@ -1,7 +1,7 @@
 import { getTime, format } from 'date-fns'
 import { appendSelectedProjectsTasksToMain } from './generateMain';
 import { regenerateProjectList } from './generateSidebar';
-import { projectList } from './projects';
+import { projectList, getProjectObjectOfSearchedProject } from './projects';
 import { hideActiveTaskCount } from './universalDOMmanipulations'
 import flagImage from '../images/flag.svg'
 
@@ -28,16 +28,25 @@ export class Task {
 }
 
 export function removeTask(taskObject, projectObject) {
-    let indexOfSearchedTask = projectObject.taskList.indexOf(taskObject)
-    projectObject.taskList.splice(indexOfSearchedTask, 1)
-    regenerateTaskList(projectObject)
+    try {
+        let indexOfSearchedTask = projectObject.taskList.indexOf(taskObject)
+        projectObject.taskList.splice(indexOfSearchedTask, 1)
+        regenerateTaskList(projectObject)
+
+    } catch (error) {
+        { }
+    }
 
 }
 
-export function createNewTask(projectObject) {
-    let newTaskName = prompt('Please input new task name');
-    projectObject.addTask = new Task(newTaskName, projectObject.projectNumber)
-    regenerateTaskList(projectObject)
+export function createNewTask(taskObject, setOfNewValues) {
+    taskObject.name = setOfNewValues.taskNewName;
+    taskObject.dateEdited = getTime(new Date());
+    // taskObject.dueDate = ''newDueDate'';  // not yet implemented
+    taskObject.belongsToProjectNumber = setOfNewValues.taskNewBelongToProject[0].projectNumber;
+    const newProjectObject = setOfNewValues.taskNewBelongToProject[0]
+    newProjectObject.taskList.push(taskObject)
+    regenerateTaskList(newProjectObject)
 }
 
 export function regenerateTaskList(projectObject) {
@@ -50,7 +59,6 @@ export function regenerateTaskList(projectObject) {
     }
     (appendSelectedProjectsTasksToMain(projectObject))
     regenerateProjectList(projectObject)
-    console.log('renegerate in')
 }
 
 export function createTaskDiv(taskObject, projectObject) {      //entire task object is send here
@@ -67,7 +75,7 @@ export function createTaskDiv(taskObject, projectObject) {      //entire task ob
 
     const taskEditButton = document.createElement('button');
     taskEditButton.classList.add('task', 'edit-button');
-    taskEditButton.addEventListener('click', () => editTask(taskObject, projectObject));
+    taskEditButton.addEventListener('click', () => showTaskEditWindow(taskObject, projectObject));
 
     const taskDeleteButton = document.createElement('button');
     taskDeleteButton.classList.add('task', 'delete-button');
@@ -89,11 +97,23 @@ function switchTaskComplete(taskObject, projectObject) {
     hideActiveTaskCount()
 }
 
-function editTask(taskObject, projectObject) {
-    showTaskEditWindow(taskObject, projectObject)
+function editTask(taskObject, setOfNewValues) {
+    taskObject.name = setOfNewValues.taskNewName;
+    taskObject.dateEdited = getTime(new Date());
+    // taskObject.dueDate = ''newDueDate'';  // not yet implemented
+    const projectObjectFromWhichToDeleteTask = getProjectObjectOfSearchedProject(taskObject.belongsToProjectNumber)[0]
+    taskObject.belongsToProjectNumber = setOfNewValues.taskNewBelongToProject[0].projectNumber;
+    const newProjectObject = setOfNewValues.taskNewBelongToProject[0]
+    newProjectObject.taskList.push(taskObject)
+    removeTask(taskObject, projectObjectFromWhichToDeleteTask)
+    regenerateTaskList(newProjectObject)
+
+
+    // taskObject.flag = setOfNewValues.taskNewFlag;
+
 }
 
-function showTaskEditWindow(taskObject, projectObject) {
+export function showTaskEditWindow(taskObject, projectObject) {
     const editWindowHolder = document.createElement('div');
     editWindowHolder.setAttribute('id', 'edit-window-holder');
     const editWindow = document.createElement('form');
@@ -102,18 +122,28 @@ function showTaskEditWindow(taskObject, projectObject) {
     const listOfTaskParameters = document.createElement('ul');
     listOfTaskParameters.setAttribute('id', 'list-of-task-parameters');
 
-    listOfTaskParameters.append(getTaskNameDiv(taskObject), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(taskObject), getSubmitAndCancelButtons(taskObject));
+    switch (taskObject.name) {
+        case undefined:
+            let newTask = new Task(null, projectObject.projectNumber)
+            listOfTaskParameters.append(getTaskNameDiv('New task name'), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(newTask.flag), getSubmitAndCancelButtons(newTask));
+            break;
+
+        default:
+            listOfTaskParameters.append(getTaskNameDiv(taskObject.name), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(taskObject.flag), getSubmitAndCancelButtons(taskObject));
+            break;
+    }
     editWindow.append(listOfTaskParameters);
     editWindowHolder.append(editWindow)
     document.querySelector('body').append(editWindowHolder);
 }
 
-function getTaskNameDiv(taskObject) {
+function getTaskNameDiv(taskObjectName) {
     const taskName = document.createElement('li');
-    taskName.setAttribute('id', 'task-name-input')
+    taskName.classList.add('task-name-input')
     const taskNameInput = document.createElement('input');
     taskNameInput.setAttribute('type', 'text');
-    taskNameInput.value = taskObject.name;
+    taskNameInput.setAttribute('id', 'task-name-input');
+    taskNameInput.value = taskObjectName;
     const taskNameInputLabel = document.createElement('label');
     taskNameInputLabel.innerHTML = 'Task name:';
     taskName.append(taskNameInputLabel, taskNameInput);
@@ -126,9 +156,11 @@ function getTaskBelongToProjectDiv(projectObject) {
     const taskBelongToProjectInputLabel = document.createElement('label');
     taskBelongToProjectInputLabel.innerText = 'Task assigned to project:'
     taskBelongToProjectInput.setAttribute('name', 'project-list-dropdown');
+    taskBelongToProjectInput.setAttribute('id', 'project-list-belongs');
     projectList.forEach(project => {
         const option = document.createElement('option');
         option.innerHTML = project.name;
+        option.setAttribute('dataset', project.projectNumber);
         project.name === projectObject.name ? option.setAttribute('selected', 'selected') : {};
         taskBelongToProjectInput.append(option);
     })
@@ -136,8 +168,9 @@ function getTaskBelongToProjectDiv(projectObject) {
     return taskBelongToProject;
 }
 
-function getTaskFlagDiv(taskObject) {
+function getTaskFlagDiv(taskObjectFlag) {
     const taskFlag = document.createElement('li');
+    taskFlag.classList.add('project-flag-selector');
     const taskFlagFieldset = document.createElement('fieldset');
     const taskFlagFieldsetLegend = document.createElement('legend');
     taskFlagFieldsetLegend.innerHTML = 'Choose flag:'
@@ -153,9 +186,10 @@ function getTaskFlagDiv(taskObject) {
         taskFlagInput.setAttribute('type', 'radio');
         taskFlagInput.setAttribute('name', `task-flag`);
         taskFlagInput.setAttribute('id', `task-flag-${i}`);
-        taskObject.flag === i ? taskFlagInput.checked = true : {};
-        taskFlagInputLabel.append(taskFlagInput)
-        taskFlagFieldset.append(taskFlagInputLabel, flagImg)
+        taskFlagInput.setAttribute('dataset', i);
+        taskObjectFlag === i ? taskFlagInput.checked = true : {};
+        taskFlagInputLabel.append(flagImg)
+        taskFlagFieldset.append(taskFlagInput, taskFlagInputLabel)
     }
     return taskFlag;
 }
@@ -170,15 +204,23 @@ function getSubmitAndCancelButtons(taskObject) {
     cancelButton.addEventListener('click', () => document.getElementById('edit-window-holder').remove())
 
     const submitButton = document.createElement('button');
-    submitButton.setAttribute('type', 'submit')
+    submitButton.setAttribute('type', 'button')
     submitButton.setAttribute('id', 'submit-button');
-    submitButton.innerText = 'Edit task'
-
+    (taskObject.name === null) ? ((submitButton.innerText = 'Add new task') && (submitButton.addEventListener('click', () => createNewTask(taskObject, readNewTaskParameters())))) : ((submitButton.innerText = 'Edit task') && (submitButton.addEventListener('click', () => editTask(taskObject, readNewTaskParameters()))));
     buttonHolder.append(cancelButton, submitButton)
     return buttonHolder
 }
 
-// function moveTaskToTheEndOfArray(taskObject, projectObject) {
-//     projectObject.taskList.indexOf(taskObject)
-//     console.log('yes')
-// }
+function readNewTaskParameters(currentProjectObject) {
+    const taskNewName = document.getElementById('task-name-input').value
+    const taskNewBelongToProjectList = document.getElementById('project-list-belongs')
+    const taskNewBelongToProjectNumber = taskNewBelongToProjectList.options[taskNewBelongToProjectList.selectedIndex].attributes.dataset.value;
+    // const taskNewFlag = document.querySelector('input[name="task-flag"]:checked').attributes.dataset.value;
+    return {
+        'taskNewName': taskNewName,
+        'taskNewBelongToProject': getProjectObjectOfSearchedProject(taskNewBelongToProjectNumber),
+        // 'taskNewFlag': taskNewFlag,
+        'currentProjectObject': currentProjectObject
+    }
+};
+

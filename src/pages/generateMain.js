@@ -1,4 +1,4 @@
-import { Task, removeTask, createNewTask, createTaskDiv } from './tasks'
+import { Task, removeTask, createNewTask, createTaskDiv, showTaskEditWindow } from './tasks'
 import { removeProjectTasksFromMain, projectList } from './projects'
 import { } from './universalDOMmanipulations'
 
@@ -19,7 +19,7 @@ export function appendSelectedProjectsTasksToMain(projectObject) {  //entire pro
 
     const newTaskButton = document.createElement('button');
     newTaskButton.setAttribute('id', 'new-task-button');
-    newTaskButton.addEventListener('click', () => createNewTask(projectObject));
+    newTaskButton.addEventListener('click', () => showTaskEditWindow({}, projectObject));
     listOfTasks.append(newTaskButton)
 
     main.append(listOfTasks);

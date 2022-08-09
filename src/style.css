@@ -452,23 +452,23 @@ button.task {
 }
 
 #edit-window #submit-and-cancel-button-holder #submit-button {
-    background-color: #b5d8cc;
-    color: #187254
+    background-color: #1b8cf0;
+    color: #ffffff
 }
 
 #edit-window #submit-and-cancel-button-holder #submit-button:hover {
     /* border: 3px solid #187254; */
-    box-shadow: 0px 0px 10px 2px #187254;
+    box-shadow: 0px 0px 10px 2px #1b8cf0;
 }
 
 #edit-window #submit-and-cancel-button-holder #cancel-button {
-    background-color: #d7cdd2;
-    color: #884661
+    background-color: #c4c4d1;
+    color: rgb(0, 0, 0)
 }
 
 #edit-window #submit-and-cancel-button-holder #cancel-button:hover {
     /* border: 3px solid #187254; */
-    box-shadow: 0px 0px 10px 2px #884661;
+    box-shadow: 0px 0px 10px 2px #bdbdbd;
 }
 
 
@@ -499,13 +499,13 @@ button.task {
     background-color: #1e2a3a;
 }
 
-#list-of-task-parameters fieldset input:checked +label {
+#list-of-task-parameters fieldset input:checked+label {
     border: 1px solid #2357a0;
     background-color: #1a2533;
 }
 
-label>input {
-    /* display: none; */
+fieldset>input {
+    display: none;
 }
 
 #list-of-task-parameters fieldset img {

@@ -76,12 +76,19 @@ export function removeProjectTasksFromMain() {
 
 function getIndexOfSearchedProject(searchedProjectNumber) {
 
-    for (let i = 0; i < projectList.length; i++) {
-        if (projectList[i].projectNumber === searchedProjectNumber) {
-            return projectList.indexOf(projectList[i])
-        }
+    var searchedProjectObject = projectList.filter(project => {
+        return (project.projectNumber === Number(searchedProjectNumber))
+    })
+    return searchedProjectObject.indexOf(projectList[i])
 
-    }
+}
+
+export function getProjectObjectOfSearchedProject(searchedProjectNumber) {
+
+    var searchedProjectObject = projectList.filter(project => {
+        return (project.projectNumber === Number(searchedProjectNumber))
+    })
+    return searchedProjectObject
 }
 
 export function editProjectName(projectObject) {
@@ -93,22 +100,22 @@ export function editProjectName(projectObject) {
 const exampleProject = new Project('example')
 const exampleTask = (new Task('chleb'))
 exampleTask.dueDate = getTime(new Date());
+exampleTask.belongsToProjectNumber = 0;
 exampleProject.addTask = exampleTask
-console.log(exampleProject.listOfTasks)
 
 const exampleProject2 = new Project('example2')
 const exampleTask2 = (new Task('chleb2'))
 exampleTask2.dueDate = getTime(new Date());
+exampleTask2.belongsToProjectNumber = 1;
 exampleProject2.addTask = exampleTask2
-console.log(exampleProject2.listOfTasks)
 
 
 
 const exampleProject3 = new Project('example3')
 const exampleTask3 = (new Task('chleb3'))
 exampleTask3.dueDate = getTime(new Date());
+exampleTask3.belongsToProjectNumber = 2;
 exampleProject3.addTask = exampleTask3
-console.log(exampleProject2.listOfTasks);
 
 export function getActiveTaskCount(projectObject) {
     let activeTaskCount = 0;
@@ -117,5 +124,4 @@ export function getActiveTaskCount(projectObject) {
     }
     return activeTaskCount
 };
-
 
