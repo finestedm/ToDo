@@ -122,7 +122,7 @@ export function showTaskEditWindow(taskObject, projectObject) {
     const listOfTaskParameters = document.createElement('ul');
     listOfTaskParameters.setAttribute('id', 'list-of-task-parameters');
 
-    switch (taskObject.name) {
+    switch (taskObject.name) {  // if task is just created it has no name so in this case we send parameters to createTask instead of editTask
         case undefined:
             let newTask = new Task(null, projectObject.projectNumber)
             listOfTaskParameters.append(getTaskNameDiv('New task name'), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(newTask.flag), getSubmitAndCancelButtons(newTask));

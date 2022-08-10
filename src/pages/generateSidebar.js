@@ -32,8 +32,8 @@ function iterateThroughProjectList() {
 
 function askForNewProjectName() {
     let newProjectName = prompt('Please enter new projects name');
-    new Project(newProjectName)
-    regenerateProjectList()
+    (newProjectName === '') ? {} : ((new Project(newProjectName)) && (regenerateProjectList()))
+
 }
 
 export function regenerateProjectList() {

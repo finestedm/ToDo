@@ -172,7 +172,7 @@ button {
     display: flex;
     flex-direction: column;
     /* height: 100%; */
-    padding: 1rem;
+    padding: 1.5rem;
     overflow: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -211,16 +211,15 @@ button {
 #project-list>li {
     display: flex;
     align-items: center;
-    padding: 1rem .5rem;
-    background-color: #ffffff00;
+    padding: 1.5rem .5rem;
+    background-color: #ffffff11;
     transition: all .2s ease-in-out;
-    border: 1px solid #131a24;
-    margin: .5rem 0;
+    margin: 1rem 0;
     border-radius: .25rem;
 }
 
 #project-list>li:hover {
-    background-color: #ffffff15;
+    background-color: #ffffff1c;
 }
 
 .sidebar>ul {
@@ -376,7 +375,7 @@ button.task {
 
 #edit-window {
     background-color: #232e41;
-    width: max(50%, 500px);
+    width: clamp(350px, 50%, 700px);
     padding: 2rem;
     border-radius: .5rem;
     ;

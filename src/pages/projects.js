@@ -46,7 +46,7 @@ export function createProjectDiv(projectObject) {
 
     const projectDeleteButton = document.createElement('button');
     projectDeleteButton.classList.add('project', 'delete-button');
-    projectDeleteButton.addEventListener('click', () => deleteProject(projectObject.projectNumber));
+    projectDeleteButton.addEventListener('click', () => deleteProject(projectObject));
 
     const projectActiveTaskCounter = document.createElement('p');
     projectActiveTaskCounter.classList.add('project', 'active-task-counter');
@@ -58,12 +58,11 @@ export function createProjectDiv(projectObject) {
 }
 
 
-export function deleteProject(projectToDeleteNumber) {
-    let IndexOfSearchedProject = getIndexOfSearchedProject(projectToDeleteNumber)
+export function deleteProject(projectObject) {
+    let IndexOfSearchedProject = getIndexOfSearchedProject(projectObject.projectNumber)
     projectList.splice(IndexOfSearchedProject, 1)
-    regenerateProjectList()
-    let numberOfPreviousProjectInArray = (IndexOfSearchedProject - 1)       // new function required to look for the number instead of the index
-    regenerateTaskList(projectList[numberOfPreviousProjectInArray])
+    // let numberOfPreviousProjectInArray = (getIndexOfSearchedProject - 1)       // new function required to look for the number instead of the index
+    regenerateTaskList(projectList[0])
 }
 
 export function removeProjectTasksFromMain() {
@@ -79,7 +78,7 @@ function getIndexOfSearchedProject(searchedProjectNumber) {
     var searchedProjectObject = projectList.filter(project => {
         return (project.projectNumber === Number(searchedProjectNumber))
     })
-    return searchedProjectObject.indexOf(projectList[i])
+    return projectList.indexOf(searchedProjectObject[0])
 
 }
 
