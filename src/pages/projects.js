@@ -2,6 +2,8 @@ import { getTime, format } from 'date-fns'
 import { appendSelectedProjectsTasksToMain, checkIfSelectedProjectIsAlreadyShown } from './generateMain'
 import { Task, regenerateTaskList } from './tasks'
 import { regenerateProjectList } from './generateSidebar'
+import { changeProjectHeaderTitle } from './generateProjectTitleHeader'
+
 
 export const projectList = []
 
@@ -28,14 +30,17 @@ export class Project {
     }
 
     sendSelectedProjectsTasks() {
-        checkIfSelectedProjectIsAlreadyShown(this.name) ? {} : appendSelectedProjectsTasksToMain(this) // if one selects a project that is already shown in Main then it will not be appended.
-    }
+        if (checkIfSelectedProjectIsAlreadyShown(this.name) === false) { // if one selects a project that is already shown in Main then it will not be appended.
+            (appendSelectedProjectsTasksToMain(this))
+            changeProjectHeaderTitle(this)
+        }
 
+    }
 }
 
 export function createProjectDiv(projectObject) {
     const projectHolder = document.createElement('li');
-    projectHolder.addEventListener('click', () => projectObject.sendSelectedProjectsTasks()) // this event listener for now only console logs tasks added to 'this' specific project. Later show it as list of tasks
+    projectHolder.addEventListener('click', () => projectObject.sendSelectedProjectsTasks());
 
     const projectButton = document.createElement('h3');
     projectButton.innerText = projectObject.name;
@@ -59,10 +64,24 @@ export function createProjectDiv(projectObject) {
 
 
 export function deleteProject(projectObject) {
-    let IndexOfSearchedProject = getIndexOfSearchedProject(projectObject.projectNumber)
-    projectList.splice(IndexOfSearchedProject, 1)
-    // let numberOfPreviousProjectInArray = (getIndexOfSearchedProject - 1)       // new function required to look for the number instead of the index
-    regenerateTaskList(projectList[0])
+    if (checkIfProjectHasActiveTasks(projectObject)) {
+        alert('are you sure you want to delete project with active tasks?') // later add confirmation button
+
+    } else {
+        let IndexOfSearchedProject = getIndexOfSearchedProject(projectObject.projectNumber);
+        if (projectList.length === 1) {
+            alert('cannot delete last project')
+        } else {
+            projectList.splice(IndexOfSearchedProject, 1);
+            regenerateTaskList(projectList[0]);
+        }
+
+    }
+}
+
+function checkIfProjectHasActiveTasks(projectObject) {
+    // console.log(projectObject.taskList.reduce((previousValue, currentValue) => previousValue + currentValue, 0)) // later add function that will count all active tasks within project
+    return projectObject.taskList.length !== 0
 }
 
 export function removeProjectTasksFromMain() {
@@ -91,7 +110,14 @@ export function getProjectObjectOfSearchedProject(searchedProjectNumber) {
 }
 
 export function editProjectName(projectObject) {
-    projectObject.name = prompt('What is the new project name?', projectObject.name)
+    const projectNewName = prompt('What is the new project name?', projectObject.name);
+    if (projectNewName === '') {
+        alert('Name cannot be empty');
+    } else if (projectNewName === null) {
+        { }
+    } else {
+        projectObject.name = projectNewName;
+    }
     regenerateProjectList()
 }
 

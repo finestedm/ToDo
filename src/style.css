@@ -131,13 +131,23 @@ table {
 
 /*  */
 
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 *,
 body {
-    font-family: 'Poppins', sans-serif;
-    color: white;
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
+}
+
+:root {
+    --text-color-black: black;
+    --background-white: white;
+    --background-gray: #f2f3f7;
+    --text-color-90: #333333;
+    --text-color-70: #999999;
+    --button-hover: #ffffff;
+    --box-shadow: rgba(0, 0, 0, 0.22);
+
 }
 
 button {
@@ -154,15 +164,15 @@ button {
     height: 100vh;
     max-height: 100vh;
     width: 100%;
-    background-color: #19212e;
+    background-color: var(--background-white);
 }
 
 .main-window {
     display: grid;
     grid-template-areas:
-        "header header"
+        "header project-title"
         "sidebar main";
-    grid-template-rows: 5rem 1fr;
+    grid-template-rows: 7rem 1fr;
     grid-template-columns: 15rem 1fr;
     height: 100%;
 }
@@ -176,7 +186,7 @@ button {
     overflow: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    background-color: hsl(217, 30%, 15%);
+    background-color: var(--background-gray);
 }
 
 .sidebar::-webkit-scrollbar {
@@ -184,8 +194,10 @@ button {
 }
 
 .sidebar>h2 {
-    font-size: 1.35rem;
-    margin: 1rem 0 .5rem 0;
+    font-size: 0.8rem;
+    color: var(--text-color-70);
+    word-spacing: 1px;
+    font-weight: 700;
 }
 
 .sidebar>ul button {
@@ -194,6 +206,7 @@ button {
 }
 
 .sidebar>ul h3 {
+    color: var(--text-color-90);
     font-size: 1rem;
     margin: .25rem;
     background-color: transparent;
@@ -205,21 +218,22 @@ button {
     font-weight: 700;
     font-size: .7rem;
     align-self: start;
-    /* this color should be changing according to number of tasks */
+    position: relative;
+    top: 5px
+        /* this color should be changing according to number of tasks */
 }
 
 #project-list>li {
     display: flex;
     align-items: center;
-    padding: 1.5rem .5rem;
-    background-color: #ffffff11;
+    padding: .2rem;
     transition: all .2s ease-in-out;
     margin: 1rem 0;
-    border-radius: .25rem;
+    border-radius: .4rem;
 }
 
 #project-list>li:hover {
-    background-color: #ffffff1c;
+    background-color: var(--button-hover);
 }
 
 .sidebar>ul {
@@ -252,8 +266,7 @@ li:hover button.project:hover {
     background-size: 75%;
 }
 
-#new-project-button,
-#new-task-button {
+#new-project-button {
     flex: 1 0 50px;
     background-color: transparent;
     transition: all .2s ease-in-out;
@@ -266,35 +279,62 @@ li:hover button.project:hover {
     opacity: .25;
 }
 
-#new-project-button:hover,
-#new-task-button:hover {
+#new-project-button:hover {
     opacity: 1;
-    background-color: #ffffff15;
+    background-color: var(--button-hover);
     background-size: 2.5rem;
 }
 
-main>ul {
-    display: flex;
-    flex-direction: column;
-    margin: 1rem;
-
-}
-
-main>ul>li {
-    padding: 1rem .5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#new-task-button {
+    background-color: transparent;
+    transition: all .2s ease-in-out;
+    background: url(./images/plus.svg) no-repeat center;
+    background-size: 2rem;
+    border: none;
     border: 1px solid #131a24;
-    border-radius: .25rem;
+    padding: 1rem .5rem;
     margin: .5rem 0;
+    border-radius: .25rem;
+    opacity: .25;
+    height: 100%;
+
 }
 
-main>ul>li:hover {
-    background-color: #ffffff15;
+#new-task-button:hover {
+    opacity: 1;
+    background-color: var(--button-hover);
+    background-size: 2.5rem;
+}
+
+main #task-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 5rem 3rem;
+    align-items: center;
+}
+
+main #task-list>li {
+    padding: 1rem;
+    display: grid;
+    grid-template-areas:
+        "complete-input title duedate button1 button2 button3"
+        "complete-input content content content content content";
+    grid-template-columns: 20px 1fr 1fr 40px 40px;
+    grid-template-rows: 2rem 1fr;
+    align-items: center;
+    border-radius: .5rem;
+    height: 100%;
+    background-color: var(--background-gray);
+    transition: all .2s ease-out;
+}
+
+main #task-list>li:hover {
+    box-shadow: 0 0 10px var(--box-shadow);
 }
 
 main>ul>li>.complete-input {
+    grid-area: complete-input;
+    grid-row: 1 / span 1;
     scale: 1
 }
 
@@ -303,40 +343,101 @@ main>ul>li>.complete-input:hover {
 }
 
 main>ul>li>h3 {
+    grid-area: title;
+    font-size: 1rem;
+    margin-left: 1rem;
+    line-height: 1.5rem;
+}
+
+main>ul>li time {
+    grid-area: duedate;
+    font-size: .8rem;
+}
+
+main>ul>li>p {
+    grid-area: content;
     font-size: 1rem;
     margin-right: auto;
-    margin-left: 2rem;
+    margin-left: 1rem;
+    font-size: .8rem;
+    line-height: 1.5rem;
+
 }
 
 main>ul>li>button {
+    grid-area: button;
     margin-right: auto;
     margin: .25rem;
     border: none;
 }
 
+main>ul>li .task.edit-button {
+    grid-area: button1;
+}
+
+main>ul>li .task.delete-button {
+    grid-area: button2;
+}
+
+main>ul>li .task.due-button {
+    grid-area: button3;
+}
+
 header {
     grid-area: header;
-    width: 100%;
-    background-color: #232e41;
+    background-color: var(--background-gray);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    box-shadow: 0 10px 25px #0000002c;
-    font-size: 2.4rem;
-    letter-spacing: -3px;
-    box-shadow: 0 7px 10px #00000015;
-    z-index: 1;
+    font-size: 1.5rem;
+    letter-spacing: -2px;
+    position: relative;
 }
+
+header:after {
+    content: "";
+    background: #00000010;
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    height: 2px;
+    width: 80%;
+}
+
 
 #header--logo {
-    fill: white;
-    height: 2.4rem;
+    height: 1.5rem;
+}
+
+#main--project-title-header {
+    grid-area: project-title;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 2.5rem;
+    line-height: 2.5rem;
 
 }
+
+#main--project-title-header h1 {
+    font-size: 2.6rem;
+    letter-spacing: -2px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: var(--text-color-90);
+}
+
+#main--project-title-header>span {
+    font-size: 1rem;
+    color: var(--text-color-70);
+
+}
+
 
 main {
     grid-area: main;
+    margin: 1rem 2.5rem;
 }
 
 button.project,

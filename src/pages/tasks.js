@@ -15,6 +15,7 @@ export class Task {
         this.isComplete = false;
         this.belongsToProjectNumber = projectNumber;
         this.flag = 0;
+        this.content = null;
     }
 
     // set dateEdited(date) {
@@ -41,8 +42,9 @@ export function removeTask(taskObject, projectObject) {
 
 export function createNewTask(taskObject, setOfNewValues) {
     taskObject.name = setOfNewValues.taskNewName;
+    taskObject.content = setOfNewValues.taskNewContent;
     taskObject.dateEdited = getTime(new Date());
-    // taskObject.dueDate = ''newDueDate'';  // not yet implemented
+    taskObject.dueDate = setOfNewValues.taskNewDueDate;  // not yet implemented
     taskObject.belongsToProjectNumber = setOfNewValues.taskNewBelongToProject[0].projectNumber;
     const newProjectObject = setOfNewValues.taskNewBelongToProject[0]
     newProjectObject.taskList.push(taskObject)
@@ -59,6 +61,7 @@ export function regenerateTaskList(projectObject) {
     }
     (appendSelectedProjectsTasksToMain(projectObject))
     regenerateProjectList(projectObject)
+    console.log(projectObject.taskList)
 }
 
 export function createTaskDiv(taskObject, projectObject) {      //entire task object is send here
@@ -73,6 +76,12 @@ export function createTaskDiv(taskObject, projectObject) {      //entire task ob
     const taskName = document.createElement('h3');
     taskName.innerText = taskObject.name;
 
+    const taskContent = document.createElement('p');
+    taskContent.innerText = taskObject.content;
+
+    const taskDueDate = document.createElement('time');
+    taskDueDate.innerText = taskObject.dueDate;
+
     const taskEditButton = document.createElement('button');
     taskEditButton.classList.add('task', 'edit-button');
     taskEditButton.addEventListener('click', () => showTaskEditWindow(taskObject, projectObject));
@@ -85,7 +94,7 @@ export function createTaskDiv(taskObject, projectObject) {      //entire task ob
     taskDueDateButton.classList.add('task', 'due-button');
     taskDueDateButton.addEventListener('click', () => console.log('Set Due Date action'));
 
-    taskHolder.append(taskCompleteButton, taskName, taskEditButton, taskDeleteButton, taskDueDateButton);
+    taskHolder.append(taskCompleteButton, taskName, taskContent, taskDueDate, taskEditButton, taskDeleteButton, taskDueDateButton);
 
     return taskHolder;
 }
@@ -99,8 +108,9 @@ function switchTaskComplete(taskObject, projectObject) {
 
 function editTask(taskObject, setOfNewValues) {
     taskObject.name = setOfNewValues.taskNewName;
+    taskObject.content = setOfNewValues.taskNewContent;
     taskObject.dateEdited = getTime(new Date());
-    // taskObject.dueDate = ''newDueDate'';  // not yet implemented
+    taskObject.dueDate = setOfNewValues.taskNewDueDate  // not yet implemented
     const projectObjectFromWhichToDeleteTask = getProjectObjectOfSearchedProject(taskObject.belongsToProjectNumber)[0]
     taskObject.belongsToProjectNumber = setOfNewValues.taskNewBelongToProject[0].projectNumber;
     const newProjectObject = setOfNewValues.taskNewBelongToProject[0]
@@ -125,11 +135,11 @@ export function showTaskEditWindow(taskObject, projectObject) {
     switch (taskObject.name) {  // if task is just created it has no name so in this case we send parameters to createTask instead of editTask
         case undefined:
             let newTask = new Task(null, projectObject.projectNumber)
-            listOfTaskParameters.append(getTaskNameDiv('New task name'), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(newTask.flag), getSubmitAndCancelButtons(newTask));
+            listOfTaskParameters.append(getTaskNameDiv('New task name'), getTaskContentDiv('Enter your notes here'), getTaskDueDate(0), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(newTask.flag), getSubmitAndCancelButtons(newTask));
             break;
 
         default:
-            listOfTaskParameters.append(getTaskNameDiv(taskObject.name), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(taskObject.flag), getSubmitAndCancelButtons(taskObject));
+            listOfTaskParameters.append(getTaskNameDiv(taskObject.name), getTaskContentDiv(taskObject.content), getTaskDueDate(taskObject.dueDate), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(taskObject.flag), getSubmitAndCancelButtons(taskObject));
             break;
     }
     editWindow.append(listOfTaskParameters);
@@ -148,6 +158,35 @@ function getTaskNameDiv(taskObjectName) {
     taskNameInputLabel.innerHTML = 'Task name:';
     taskName.append(taskNameInputLabel, taskNameInput);
     return taskName;
+}
+
+function getTaskContentDiv(taskObjectContent) {
+    const taskContent = document.createElement('li');
+    taskContent.classList.add('task-content-input')
+    const taskContentInput = document.createElement('input');
+    taskContentInput.setAttribute('type', 'text');
+    taskContentInput.setAttribute('id', 'task-content-input');
+    taskContentInput.value = taskObjectContent;
+    const taskContentInputLabel = document.createElement('label');
+    taskContentInputLabel.innerHTML = 'Task:';
+    taskContent.append(taskContentInputLabel, taskContentInput);
+    console.log(taskContent)
+    return taskContent;
+}
+
+function getTaskDueDate() {
+    const taskDueDate = document.createElement('li');
+    taskDueDate.classList.add('task-duedate-input')
+    const taskDueDateInput = document.createElement('input');
+    taskDueDateInput.setAttribute('value', `${getTime(new Date())}`);
+    taskDueDateInput.setAttribute('min', `${getTime(new Date())}`);
+    taskDueDateInput.setAttribute('max', '2050-12-31');
+    taskDueDateInput.setAttribute('type', 'date');
+    taskDueDateInput.setAttribute('id', 'task-duedate-input');
+    const taskDueDateInputLabel = document.createElement('label');
+    taskDueDateInputLabel.innerHTML = 'Due Date:';
+    taskDueDate.append(taskDueDateInputLabel, taskDueDateInput);
+    return taskDueDate;
 }
 
 function getTaskBelongToProjectDiv(projectObject) {
@@ -206,18 +245,29 @@ function getSubmitAndCancelButtons(taskObject) {
     const submitButton = document.createElement('button');
     submitButton.setAttribute('type', 'button')
     submitButton.setAttribute('id', 'submit-button');
-    (taskObject.name === null) ? ((submitButton.innerText = 'Add new task') && (submitButton.addEventListener('click', () => createNewTask(taskObject, readNewTaskParameters())))) : ((submitButton.innerText = 'Edit task') && (submitButton.addEventListener('click', () => editTask(taskObject, readNewTaskParameters()))));
+    if (taskObject.name === null) {
+        submitButton.innerText = 'Add new task'
+        submitButton.addEventListener('click', () => createNewTask(taskObject, readNewTaskParameters()))
+    } else {
+        submitButton.innerText = 'Edit task'
+        submitButton.addEventListener('click', () => editTask(taskObject, readNewTaskParameters()))
+    }
     buttonHolder.append(cancelButton, submitButton)
     return buttonHolder
 }
 
 function readNewTaskParameters(currentProjectObject) {
     const taskNewName = document.getElementById('task-name-input').value
+    const taskNewContent = document.getElementById('task-content-input').value
+    const taskNewDueDate = document.getElementById('task-duedate-input').value
     const taskNewBelongToProjectList = document.getElementById('project-list-belongs')
     const taskNewBelongToProjectNumber = taskNewBelongToProjectList.options[taskNewBelongToProjectList.selectedIndex].attributes.dataset.value;
     // const taskNewFlag = document.querySelector('input[name="task-flag"]:checked').attributes.dataset.value;
+    document.getElementById('edit-window-holder').remove()
     return {
         'taskNewName': taskNewName,
+        'taskNewContent': taskNewContent,
+        'taskNewDueDate': taskNewDueDate,
         'taskNewBelongToProject': getProjectObjectOfSearchedProject(taskNewBelongToProjectNumber),
         // 'taskNewFlag': taskNewFlag,
         'currentProjectObject': currentProjectObject

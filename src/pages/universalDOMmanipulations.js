@@ -12,7 +12,7 @@ function changeActiveTaskCounterColor(projectCounter) {
 
 document.querySelector('body').addEventListener('keydown', (e) => {
     try {
-        e.key === 'Escape' ? (document.getElementById('edit-window-holder')).remove() : {};           // URGENT: change to check projects unique number instead of name because 2 project with exact name will cause problems / OR / allow only projects with unique name 
+        e.key === 'Escape' ? (document.getElementById('edit-window-holder')).remove() : {};
     } catch (e) {
         { }
     }

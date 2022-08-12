@@ -53,14 +53,14 @@
        fill="#374957"
        d="M12 0a12 12 0 1 0 12 12A12.013 12.013 0 0 0 12 0Zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1-10 10Zm5-10a1 1 0 0 1-1 1h-3v3a1 1 0 0 1-2 0v-3H8a1 1 0 0 1 0-2h3V8a1 1 0 0 1 2 0v3h3a1 1 0 0 1 1 1Z"
        id="path2"
-       style="fill:#ffffff;fill-opacity:1" />
+       style="fill:#000;fill-opacity:1" />
   </g>
   <defs
      id="defs9">
     <clipPath
        id="a">
       <path
-         fill="#fff"
+         fill="#000"
          d="M0 0h24v24H0z"
          id="path6" />
     </clipPath>

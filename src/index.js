@@ -1,4 +1,4 @@
 import css from "./style.css";
-import mainGenerate from "./pages/page.js";
+import mainWindowGenerate from "./pages/page.js";
 
-mainGenerate()
+mainWindowGenerate()
