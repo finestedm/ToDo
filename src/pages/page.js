@@ -6,13 +6,16 @@ import { projectList, Project } from './projects'
 
 (function retrieveLocalStorage() {
     const retrievedLocalStorage = window.localStorage.getItem("projectList");
-    const retrievedLocalStorageFormatted = (JSON.parse(retrievedLocalStorage))
 
-    retrievedLocalStorageFormatted.forEach(projectRead => {
-        let newProjectPushed = new Project(projectRead.name);
-        console.log(projectRead.taskList);
-        (projectRead.taskList).forEach(task => newProjectPushed.taskList.push(task))
-    })
+    if (retrievedLocalStorage !== null) {
+        const retrievedLocalStorageFormatted = (JSON.parse(retrievedLocalStorage))
+
+        retrievedLocalStorageFormatted.forEach(projectRead => {
+            let newProjectPushed = new Project(projectRead.name);
+            console.log(projectRead.taskList);
+            (projectRead.taskList).forEach(task => newProjectPushed.taskList.push(task))
+        })
+    }
 })()
 
 export default function mainWindowGenerate() {
