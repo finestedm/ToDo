@@ -151,7 +151,7 @@ body {
 }
 
 button {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 #body {
@@ -317,9 +317,9 @@ main #task-list>li {
     padding: 1rem;
     display: grid;
     grid-template-areas:
-        "complete-input title duedate button1 button2 button3"
-        "complete-input content content content content content";
-    grid-template-columns: 20px 1fr 1fr 40px 40px;
+        "complete-input title duedate button1 button2"
+        "complete-input content content content content";
+    grid-template-columns: 20px 1fr 10ch 40px 40px;
     grid-template-rows: 2rem 1fr;
     align-items: center;
     border-radius: .5rem;
@@ -377,10 +377,6 @@ main>ul>li .task.edit-button {
 
 main>ul>li .task.delete-button {
     grid-area: button2;
-}
-
-main>ul>li .task.due-button {
-    grid-area: button3;
 }
 
 header {
@@ -475,7 +471,7 @@ button.task {
 }
 
 #edit-window {
-    background-color: #232e41;
+    background-color: var(--background-white);
     width: clamp(350px, 50%, 700px);
     padding: 2rem;
     border-radius: .5rem;
@@ -486,8 +482,8 @@ button.task {
 #edit-window select {
     position: relative;
     appearance: none;
-    border: 1px solid #131a24;
-    background-color: #131a24;
+    border: 1px solid var(--background-gray);
+    background-color: var(--background-gray);
     padding: 1rem;
     border-radius: .25rem;
     transition: all .1s ease-out;
@@ -497,8 +493,8 @@ button.task {
 #edit-window select:hover,
 #edit-window input:focus,
 #edit-window select:focus {
-    border: 1px solid #2357a0;
-    background-color: #1e2a3a;
+    border: 1px solid #80a4d6;
+    background-color: var(--background-gray);
 
 }
 
@@ -548,21 +544,24 @@ button.task {
     margin: 1rem 0;
     border: none;
     border-radius: .25rem;
-    transition: all .1s ease-out;
+    transition: all .15s ease-out;
 }
 
 #edit-window #submit-and-cancel-button-holder #submit-button {
     background-color: #1b8cf0;
+    letter-spacing: -1px;
+    font-weight: 500;
     color: #ffffff
 }
 
 #edit-window #submit-and-cancel-button-holder #submit-button:hover {
     /* border: 3px solid #187254; */
-    box-shadow: 0px 0px 10px 2px #1b8cf0;
+    box-shadow: 0px 0px 10px #1b8cf0;
 }
 
 #edit-window #submit-and-cancel-button-holder #cancel-button {
     background-color: #c4c4d1;
+    letter-spacing: -1px;
     color: rgb(0, 0, 0)
 }
 
@@ -588,20 +587,21 @@ button.task {
     flex: 0 1 70px;
     padding: 1rem;
     border-radius: .25rem;
-    border: 1px solid #131a24;
-    background-color: #131a24;
+    border: 1px solid #ffffff;
+    transition: all .2s ease-out;
 
 }
 
 #list-of-task-parameters fieldset label:hover,
 #list-of-task-parameters fieldset label:focus {
-    border: 1px solid #2357a0;
-    background-color: #1e2a3a;
+    border: 1px solid rgb(172, 172, 172);
+    background-color: rgb(231, 231, 231);
+
 }
 
 #list-of-task-parameters fieldset input:checked+label {
-    border: 1px solid #2357a0;
-    background-color: #1a2533;
+    border: 1px solid var(--background-gray);
+    background-color: var(--background-gray);
 }
 
 fieldset>input {

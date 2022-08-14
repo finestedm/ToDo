@@ -121,27 +121,6 @@ export function editProjectName(projectObject) {
     regenerateProjectList()
 }
 
-
-const exampleProject = new Project('example')
-const exampleTask = (new Task('chleb'))
-exampleTask.dueDate = getTime(new Date());
-exampleTask.belongsToProjectNumber = 0;
-exampleProject.addTask = exampleTask
-
-const exampleProject2 = new Project('example2')
-const exampleTask2 = (new Task('chleb2'))
-exampleTask2.dueDate = getTime(new Date());
-exampleTask2.belongsToProjectNumber = 1;
-exampleProject2.addTask = exampleTask2
-
-
-
-const exampleProject3 = new Project('example3')
-const exampleTask3 = (new Task('chleb3'))
-exampleTask3.dueDate = getTime(new Date());
-exampleTask3.belongsToProjectNumber = 2;
-exampleProject3.addTask = exampleTask3
-
 export function getActiveTaskCount(projectObject) {
     let activeTaskCount = 0;
     for (let i = 0; i < projectObject.taskList.length; i++) {

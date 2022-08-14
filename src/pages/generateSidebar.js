@@ -1,6 +1,7 @@
 import { projectList, Project, deleteProject, editProjectName, createProjectDiv } from './projects';
 import { regenerateTaskList } from './tasks';
 import { hideActiveTaskCount } from './universalDOMmanipulations'
+import { setLocalStorage } from './page';
 
 export default function generateSidebar() {
 
@@ -48,4 +49,5 @@ export function regenerateProjectList() {
     sidebar.insertBefore(iterateThroughProjectList(), document.getElementById('new-project-button')) // and repeat process of creating div per task via iterateThroughProjectList() and insert it before the last item (add project button)
 
     hideActiveTaskCount()
+    setLocalStorage()
 }
