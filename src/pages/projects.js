@@ -55,7 +55,7 @@ export function createProjectDiv(projectObject) {
 
     const projectActiveTaskCounter = document.createElement('p');
     projectActiveTaskCounter.classList.add('project', 'active-task-counter');
-    projectActiveTaskCounter.innerText = `(${getActiveTaskCount(projectObject)})`;
+    projectActiveTaskCounter.innerText = `${getActiveTaskCount(projectObject)}`;
 
     projectHolder.append(projectButton, projectActiveTaskCounter, projectEditButton, projectDeleteButton);
 

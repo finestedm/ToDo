@@ -142,11 +142,15 @@ body {
 :root {
     --text-color-black: black;
     --background-white: white;
-    --background-gray: #f2f3f7;
+    --background-gray: #fcfbfe;
+    --background-dark: #14121e;
     --text-color-90: #333333;
-    --text-color-70: #999999;
-    --button-hover: #ffffff;
+    --text-color-70: #868686;
+    --text-color-10: hsl(0, 0%, 100%);
+    --text-color-30: #d4d2df;
+    --button-hover: #cfd2ea;
     --box-shadow: rgba(0, 0, 0, 0.22);
+
 
 }
 
@@ -186,7 +190,7 @@ button {
     overflow: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    background-color: var(--background-gray);
+    background-color: var(--background-dark);
 }
 
 .sidebar::-webkit-scrollbar {
@@ -195,7 +199,7 @@ button {
 
 .sidebar>h2 {
     font-size: 0.8rem;
-    color: var(--text-color-70);
+    color: var(--text-color-30);
     word-spacing: 1px;
     font-weight: 700;
 }
@@ -206,27 +210,32 @@ button {
 }
 
 .sidebar>ul h3 {
-    color: var(--text-color-90);
+    color: var(--text-color-10);
     font-size: 1rem;
     margin: .25rem;
     background-color: transparent;
+    transition: all .2s ease-in-out;
+
 }
 
 .active-task-counter {
     margin-right: auto;
-    color: #4fc97e;
-    font-weight: 700;
-    font-size: .7rem;
+    background-color: var(--button-hover);
+    border-radius: 1.5rem;
+    padding: .2rem .3rem;
+    text-align: center;
+    font-weight: 900;
+    font-size: .75rem;
     align-self: start;
     position: relative;
-    top: 5px
+    top: 2px
         /* this color should be changing according to number of tasks */
 }
 
 #project-list>li {
     display: flex;
     align-items: center;
-    padding: .2rem;
+    padding: 1rem .2rem;
     transition: all .2s ease-in-out;
     margin: 1rem 0;
     border-radius: .4rem;
@@ -234,6 +243,10 @@ button {
 
 #project-list>li:hover {
     background-color: var(--button-hover);
+}
+
+#project-list>li:hover h3 {
+    color: var(--text-color-90);
 }
 
 .sidebar>ul {
@@ -311,16 +324,17 @@ main #task-list {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 5rem 3rem;
     align-items: center;
+    padding: 2rem 0;
 }
 
 main #task-list>li {
     padding: 1rem;
     display: grid;
     grid-template-areas:
-        "complete-input title duedate button1 button2"
-        "complete-input content content content content";
-    grid-template-columns: 20px 1fr 10ch 40px 40px;
-    grid-template-rows: 2rem 1fr;
+        "complete-input title duedate "
+        "button1 content content"
+        "button2 content content";
+    grid-template-columns: 30px 1fr 10ch;
     align-items: center;
     border-radius: .5rem;
     height: 100%;
@@ -347,11 +361,13 @@ main>ul>li>h3 {
     font-size: 1rem;
     margin-left: 1rem;
     line-height: 1.5rem;
+
 }
 
 main>ul>li time {
     grid-area: duedate;
     font-size: .8rem;
+    font-style: italic;
 }
 
 main>ul>li>p {
@@ -361,7 +377,7 @@ main>ul>li>p {
     margin-left: 1rem;
     font-size: .8rem;
     line-height: 1.5rem;
-
+    letter-spacing: .2px;
 }
 
 main>ul>li>button {
@@ -381,7 +397,7 @@ main>ul>li .task.delete-button {
 
 header {
     grid-area: header;
-    background-color: var(--background-gray);
+    background-color: var(--background-dark);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -389,11 +405,12 @@ header {
     font-size: 1.5rem;
     letter-spacing: -2px;
     position: relative;
+    color: var(--text-color-10)
 }
 
 header:after {
     content: "";
-    background: #00000010;
+    background: #ffffff10;
     position: absolute;
     bottom: 0;
     left: 10%;
@@ -412,16 +429,16 @@ header:after {
     flex-direction: column;
     justify-content: center;
     margin-left: 2.5rem;
-    line-height: 2.5rem;
-
+    border-bottom: 1px solid var(--text-color-30)
 }
 
 #main--project-title-header h1 {
     font-size: 2.6rem;
+    line-height: 2.5rem;
     letter-spacing: -2px;
     font-weight: 600;
-    text-decoration: underline;
     color: var(--text-color-90);
+    margin-bottom: .75rem;
 }
 
 #main--project-title-header>span {
@@ -479,14 +496,17 @@ button.task {
 }
 
 #edit-window input,
-#edit-window select {
+#edit-window select,
+#edit-window textarea {
     position: relative;
     appearance: none;
-    border: 1px solid var(--background-gray);
+    border: 1px solid #f6f4f5;
     background-color: var(--background-gray);
     padding: 1rem;
-    border-radius: .25rem;
+    border-radius: .5rem;
     transition: all .1s ease-out;
+    resize: vertical;
+    rows: '2'
 }
 
 #edit-window input:hover,
@@ -534,21 +554,13 @@ button.task {
     font-size: 1.25rem;
     padding: 1rem;
     margin: 1rem 0;
-}
-
-#edit-window #submit-and-cancel-button-holder>button {
-    width: 100%;
-    appearance: none;
-    font-size: 1.25rem;
-    padding: 1rem;
-    margin: 1rem 0;
     border: none;
     border-radius: .25rem;
     transition: all .15s ease-out;
 }
 
 #edit-window #submit-and-cancel-button-holder #submit-button {
-    background-color: #1b8cf0;
+    background-color: #b6eebd;
     letter-spacing: -1px;
     font-weight: 500;
     color: #ffffff
@@ -556,7 +568,7 @@ button.task {
 
 #edit-window #submit-and-cancel-button-holder #submit-button:hover {
     /* border: 3px solid #187254; */
-    box-shadow: 0px 0px 10px #1b8cf0;
+    box-shadow: 0px 0px 10px #b6eebd;
 }
 
 #edit-window #submit-and-cancel-button-holder #cancel-button {
@@ -567,7 +579,7 @@ button.task {
 
 #edit-window #submit-and-cancel-button-holder #cancel-button:hover {
     /* border: 3px solid #187254; */
-    box-shadow: 0px 0px 10px 2px #bdbdbd;
+    box-shadow: 0px 0px 10px #bdbdbd;
 }
 
 

@@ -51,3 +51,4 @@ export function regenerateProjectList() {
     hideActiveTaskCount()
     setLocalStorage()
 }
+

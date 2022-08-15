@@ -61,7 +61,6 @@ export function regenerateTaskList(projectObject) {
     }
     (appendSelectedProjectsTasksToMain(projectObject))
     regenerateProjectList(projectObject)
-    console.log(projectObject.taskList)
 }
 
 export function createTaskDiv(taskObject, projectObject) {      //entire task object is send here
@@ -80,7 +79,11 @@ export function createTaskDiv(taskObject, projectObject) {      //entire task ob
     taskContent.innerText = taskObject.content;
 
     const taskDueDate = document.createElement('time');
-    taskDueDate.innerText = (format(getTime(taskObject.dueDate), 'yyyy-MM-dd'));
+    if (taskObject.dueDate === NaN || taskObject.dueDate === null) {
+        taskDueDate.innerText = '';
+    } else {
+        taskDueDate.innerText = (format(getTime(taskObject.dueDate), 'yyyy-MM-dd'));
+    }
 
     const taskEditButton = document.createElement('button');
     taskEditButton.classList.add('task', 'edit-button');
@@ -131,12 +134,11 @@ export function showTaskEditWindow(taskObject, projectObject) {
     switch (taskObject.name) {  // if task is just created it has no name so in this case we send parameters to createTask instead of editTask
         case undefined:
             let newTask = new Task(null, projectObject.projectNumber)
-            listOfTaskParameters.append(getTaskNameDiv('New task name'), getTaskContentDiv('Enter your notes here'), getTaskDueDate(0), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(newTask.flag), getSubmitAndCancelButtons(newTask));
+            listOfTaskParameters.append(getTaskNameDiv('New task name'), getTaskContentDiv('Enter your notes here'), getTaskDueDate(null), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(newTask.flag), getSubmitAndCancelButtons(newTask));
             break;
 
         default:
-            console.log(format(taskObject.dueDate, 'yyyy-MM-dd'))
-            listOfTaskParameters.append(getTaskNameDiv(taskObject.name), getTaskContentDiv(taskObject.content), getTaskDueDate(format(taskObject.dueDate, 'yyyy-MM-dd')), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(taskObject.flag), getSubmitAndCancelButtons(taskObject));
+            listOfTaskParameters.append(getTaskNameDiv(taskObject.name), getTaskContentDiv(taskObject.content), getTaskDueDate(taskObject.dueDate, 'yyyy-MM-dd'), getTaskBelongToProjectDiv(projectObject), getTaskFlagDiv(taskObject.flag), getSubmitAndCancelButtons(taskObject));
             break;
     }
     editWindow.append(listOfTaskParameters);
@@ -160,14 +162,12 @@ function getTaskNameDiv(taskObjectName) {
 function getTaskContentDiv(taskObjectContent) {
     const taskContent = document.createElement('li');
     taskContent.classList.add('task-content-input')
-    const taskContentInput = document.createElement('input');
-    taskContentInput.setAttribute('type', 'text');
+    const taskContentInput = document.createElement('textarea');
     taskContentInput.setAttribute('id', 'task-content-input');
     taskContentInput.value = taskObjectContent;
     const taskContentInputLabel = document.createElement('label');
     taskContentInputLabel.innerHTML = 'Task:';
     taskContent.append(taskContentInputLabel, taskContentInput);
-    console.log(taskContent)
     return taskContent;
 }
 
@@ -177,7 +177,7 @@ function getTaskDueDate(currentDueDate) {
     const taskDueDateInput = document.createElement('input');
     taskDueDateInput.setAttribute('min', `${(format(getTime(new Date()), 'yyyy-MM-dd'))}`);
     taskDueDateInput.setAttribute('max', '2050-12-31');
-    taskDueDateInput.setAttribute('value', `${currentDueDate}`);
+    currentDueDate !== null && taskDueDateInput.setAttribute('value', `${format(currentDueDate, 'yyyy-MM-dd')}`);
     taskDueDateInput.setAttribute('type', 'date');
     taskDueDateInput.setAttribute('id', 'task-duedate-input');
     const taskDueDateInputLabel = document.createElement('label');
@@ -257,7 +257,8 @@ function readNewTaskParameters(currentProjectObject) {
     const taskNewName = document.getElementById('task-name-input').value
     const taskNewContent = document.getElementById('task-content-input').value
     const taskNewDueDateUnformatted = document.getElementById('task-duedate-input').value;      //move to separate function?
-    const taskNewDueDate = (Math.floor(new Date(`${taskNewDueDateUnformatted}`).getTime()))
+    let taskNewDueDate = 0;
+    (taskNewDueDateUnformatted === '') ? taskNewDueDate = null : taskNewDueDate = (Math.floor(new Date(`${taskNewDueDateUnformatted}`).getTime()));
     const taskNewBelongToProjectList = document.getElementById('project-list-belongs')
     const taskNewBelongToProjectNumber = taskNewBelongToProjectList.options[taskNewBelongToProjectList.selectedIndex].attributes.dataset.value;
     // const taskNewFlag = document.querySelector('input[name="task-flag"]:checked').attributes.dataset.value;

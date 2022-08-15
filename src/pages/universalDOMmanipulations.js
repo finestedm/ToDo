@@ -7,7 +7,7 @@ export function hideActiveTaskCount() {
 }
 
 function changeActiveTaskCounterColor(projectCounter) {
-    projectCounter.innerHTML === '(0)' ? projectCounter.style.color = 'gray' : projectCounter.style.color = '#4fc97e'
+    projectCounter.innerHTML === '0' ? projectCounter.style.visibility = 'collapse' : (projectCounter.style.visibility = 'visible') && (projectCounter.style.color = 'black')
 }
 
 document.querySelector('body').addEventListener('keydown', (e) => {

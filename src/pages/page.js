@@ -3,6 +3,8 @@ import generateMain from './generateMain'
 import generateProjectTitleHeader from './generateProjectTitleHeader'
 import logoImage from '../images/logo.svg'
 import { projectList, Project } from './projects'
+import { getTime, format, differenceInDays } from 'date-fns'
+
 
 (function retrieveLocalStorage() {
     const retrievedLocalStorage = window.localStorage.getItem("projectList");
@@ -39,3 +41,11 @@ export function generateHeader() {
 export function setLocalStorage() {
     localStorage.setItem('projectList', JSON.stringify(projectList))
 }
+
+
+(function timeDifference() {
+    const dateOne = 1661212800000
+    const dateTwo = (new Date())
+
+    console.log(differenceInDays(dateOne, dateTwo))
+})()
