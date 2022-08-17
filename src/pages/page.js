@@ -14,7 +14,6 @@ import { getTime, format, differenceInDays } from 'date-fns'
 
         retrievedLocalStorageFormatted.forEach(projectRead => {
             let newProjectPushed = new Project(projectRead.name);
-            console.log(projectRead.taskList);
             (projectRead.taskList).forEach(task => newProjectPushed.taskList.push(task))
         })
     }

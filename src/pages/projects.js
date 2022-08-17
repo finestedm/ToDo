@@ -3,6 +3,7 @@ import { appendSelectedProjectsTasksToMain, checkIfSelectedProjectIsAlreadyShown
 import { Task, regenerateTaskList } from './tasks'
 import { regenerateProjectList } from './generateSidebar'
 import { changeProjectHeaderTitle } from './generateProjectTitleHeader'
+import { appendSelectedTasksToMain, searchForTasksNextWeek, searchForImportantTasks } from './generateOtherTaskLists'
 
 
 export const projectList = []
@@ -40,26 +41,42 @@ export class Project {
 
 export function createProjectDiv(projectObject) {
     const projectHolder = document.createElement('li');
-    projectHolder.addEventListener('click', () => projectObject.sendSelectedProjectsTasks());
-
     const projectButton = document.createElement('h3');
-    projectButton.innerText = projectObject.name;
 
-    const projectEditButton = document.createElement('button');
-    projectEditButton.classList.add('project', 'edit-button');
-    projectEditButton.addEventListener('click', () => editProjectName(projectObject));
+    if (projectObject === '7days') {
+        projectHolder.addEventListener('click', () => appendSelectedTasksToMain('Tasks for the next week', searchForTasksNextWeek()));
+        projectButton.innerText = 'Tasks ending this week';
+        projectHolder.append(projectButton);
+        return projectHolder;
 
-    const projectDeleteButton = document.createElement('button');
-    projectDeleteButton.classList.add('project', 'delete-button');
-    projectDeleteButton.addEventListener('click', () => deleteProject(projectObject));
+    } else if (projectObject === 'important') {
+        projectHolder.addEventListener('click', () => appendSelectedTasksToMain('Tasks with highest priority', searchForImportantTasks()));
+        projectButton.innerText = 'High priority';
+        projectHolder.append(projectButton);
+        return projectHolder;
 
-    const projectActiveTaskCounter = document.createElement('p');
-    projectActiveTaskCounter.classList.add('project', 'active-task-counter');
-    projectActiveTaskCounter.innerText = `${getActiveTaskCount(projectObject)}`;
+    } else {
+        projectHolder.addEventListener('click', () => projectObject.sendSelectedProjectsTasks());
 
-    projectHolder.append(projectButton, projectActiveTaskCounter, projectEditButton, projectDeleteButton);
+        projectButton.innerText = projectObject.name;
 
-    return projectHolder;
+        const projectEditButton = document.createElement('button');
+        projectEditButton.classList.add('project', 'edit-button');
+        projectEditButton.addEventListener('click', () => editProjectName(projectObject));
+
+        const projectDeleteButton = document.createElement('button');
+        projectDeleteButton.classList.add('project', 'delete-button');
+        projectDeleteButton.addEventListener('click', () => deleteProject(projectObject));
+
+        const projectActiveTaskCounter = document.createElement('p');
+        projectActiveTaskCounter.classList.add('project', 'active-task-counter');
+        projectActiveTaskCounter.innerText = `${getActiveTaskCount(projectObject)}`;
+
+        projectHolder.append(projectButton, projectActiveTaskCounter, projectEditButton, projectDeleteButton);
+        return projectHolder;
+
+    }
+
 }
 
 
@@ -106,7 +123,7 @@ export function getProjectObjectOfSearchedProject(searchedProjectNumber) {
     var searchedProjectObject = projectList.filter(project => {
         return (project.projectNumber === Number(searchedProjectNumber))
     })
-    return searchedProjectObject
+    return searchedProjectObject[0]
 }
 
 export function editProjectName(projectObject) {
