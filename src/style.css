@@ -142,15 +142,17 @@ body {
 :root {
     --text-color-black: black;
     --background-white: white;
-    --background-gray: #fcfbfe;
+    --background-gray: hsl(260, 20%, 97%);
     --background-dark: #14121e;
     --text-color-90: #333333;
     --text-color-70: #868686;
     --text-color-10: hsl(0, 0%, 100%);
-    --text-color-30: #d4d2df;
+    --text-color-20: hsl(234, 10%, 90%);
+    --text-color-30: #5d5d74;
     --button-hover: #cfd2ea;
     --box-shadow: rgba(0, 0, 0, 0.22);
-
+    --accent-color-green: #d7f7dc;
+    --accent-color-purple: #c4c7fa;
 
 }
 
@@ -168,7 +170,7 @@ button {
     height: 100vh;
     max-height: 100vh;
     width: 100%;
-    background-color: var(--background-white);
+    background-color: var(--background-gray);
 }
 
 .main-window {
@@ -186,7 +188,7 @@ button {
     display: flex;
     flex-direction: column;
     /* height: 100%; */
-    padding: 1.5rem;
+    padding: 1.5rem 0 1.5rem 1.5rem;
     overflow: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -210,7 +212,7 @@ button {
 }
 
 .sidebar>ul h3 {
-    color: var(--text-color-10);
+    color: var(--text-color-20);
     font-size: 1rem;
     margin: .25rem;
     background-color: transparent;
@@ -235,21 +237,22 @@ button {
 #project-list>li,
 #other-task-lists>li {
     display: flex;
+    box-sizing: border-box;
     align-items: center;
     padding: .5rem .2rem;
     transition: all .2s ease-in-out;
-    margin: .8rem 0;
-    border-radius: .4rem;
+    margin: .8rem 0 .8rem 1rem;
+    /* border-radius: .4rem; */
 }
 
 #project-list>li:hover,
 #other-task-lists>li:hover {
-    background-color: var(--button-hover);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(76, 78, 108, 0.3267507686668417) 15%, rgba(76, 78, 108, 1) 97%, rgb(218, 218, 224) 98%, rgb(218, 218, 224) 100%);
 }
 
 #project-list>li:hover h3,
 #other-task-lists>li:hover h3 {
-    color: var(--text-color-90);
+    color: white
 }
 
 .sidebar>ul {
@@ -287,11 +290,9 @@ li:hover button.project:hover {
     flex: 1 0 50px;
     background-color: transparent;
     transition: all .2s ease-in-out;
-    background: url(./images/plus.svg) no-repeat center;
-    background-size: 2rem;
     border: none;
-    border: 1px solid #131a24;
-    margin: .5rem 0;
+    color: var(--button-hover);
+    margin: .5rem 2.5rem .5rem .5rem;
     border-radius: .25rem;
     opacity: .25;
 }
@@ -299,39 +300,40 @@ li:hover button.project:hover {
 #new-project-button:hover {
     opacity: 1;
     background-color: var(--button-hover);
+    color: var(--text-color-black);
     background-size: 2.5rem;
 }
 
 #new-task-button {
     background-color: transparent;
     transition: all .2s ease-in-out;
-    background: url(./images/plus.svg) no-repeat center;
-    background-size: 2rem;
+    background-color: var(--accent-color-purple);
     border: none;
-    border: 1px solid #131a24;
     padding: 1rem .5rem;
     margin: .5rem 0;
-    border-radius: .25rem;
-    opacity: .25;
+    border-radius: .4rem;
     height: 100%;
-
+    box-shadow: 0 0 10px #14121e0e;
 }
 
 #new-task-button:hover {
     opacity: 1;
     background-color: var(--button-hover);
     background-size: 2.5rem;
+    box-shadow: 0 0 10px var(--box-shadow);
+
 }
 
 main #task-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 5rem 3rem;
+    gap: 3rem;
     align-items: center;
     padding: 2rem 0;
 }
 
 main #task-list>li {
+    box-sizing: border-box;
     padding: 1rem;
     display: grid;
     grid-template-areas:
@@ -342,10 +344,10 @@ main #task-list>li {
     align-items: center;
     border-radius: .5rem;
     height: 100%;
-    background-color: var(--background-gray);
+    background-color: var(--background-white);
     transition: all .2s ease-out;
     border-left: 8px solid;
-
+    box-shadow: 0 0 10px #14121e0e
 }
 
 main #task-list>li.flag-0 {
@@ -380,7 +382,8 @@ main>ul>li>.complete-input:hover {
 
 main>ul>li>h3 {
     grid-area: title;
-    font-size: 1rem;
+    font-weight: 500;
+    font-size: 1.2rem;
     margin-left: 1rem;
     line-height: 1.5rem;
 
@@ -451,7 +454,7 @@ header:after {
     flex-direction: column;
     justify-content: center;
     margin-left: 2.5rem;
-    border-bottom: 1px solid var(--text-color-30)
+    border-bottom: 1px solid var(--text-color-20)
 }
 
 #main--project-title-header h1 {
@@ -535,7 +538,7 @@ button.task {
 #edit-window select:hover,
 #edit-window input:focus,
 #edit-window select:focus {
-    border: 1px solid #80a4d6;
+    border: 1px solid var(--accent-color-purple);
     background-color: var(--background-gray);
 
 }
@@ -582,7 +585,7 @@ button.task {
 }
 
 #edit-window #submit-and-cancel-button-holder #submit-button {
-    background-color: #b6eebd;
+    background-color: var(--accent-color-green);
     letter-spacing: -1px;
     font-weight: 500;
     color: var(--background-dark)
@@ -612,6 +615,9 @@ button.task {
 } */
 
 #list-of-task-parameters fieldset {
+    background-color: var(--background-gray);
+    border: 1px solid #f6f4f5;
+    border-radius: 5rem;
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -620,7 +626,7 @@ button.task {
 #list-of-task-parameters fieldset label {
     flex: 0 1 70px;
     padding: 1rem;
-    border-radius: .25rem;
+    border-radius: 100%;
     border: 1px solid transparent;
     transition: all .2s ease-out;
 
@@ -628,13 +634,13 @@ button.task {
 
 #list-of-task-parameters fieldset label:hover,
 #list-of-task-parameters fieldset label:focus {
-    border: 1px solid rgb(172, 172, 172);
+    border: 1px solid var(--accent-color-purple);
     background-color: rgb(231, 231, 231);
 
 }
 
 #list-of-task-parameters fieldset input:checked+label {
-    border: 1px solid rgb(172, 172, 172);
+    border: 1px solid var(--accent-color-purple);
     background-color: var(--background-gray);
 }
 

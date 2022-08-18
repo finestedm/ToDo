@@ -206,9 +206,11 @@ function getTaskFlagDiv(taskObjectFlag) {
     const taskFlag = document.createElement('li');
     taskFlag.classList.add('project-flag-selector');
     const taskFlagFieldset = document.createElement('fieldset');
+    taskFlagFieldset.id = 'flag-chooser';
     const taskFlagFieldsetLegend = document.createElement('legend');
+    taskFlagFieldsetLegend.setAttribute('for', 'flag-chooser')
+    taskFlag.append(taskFlagFieldsetLegend);
     taskFlagFieldsetLegend.innerHTML = 'Choose flag:'
-    taskFlagFieldset.append(taskFlagFieldsetLegend);
     taskFlag.append(taskFlagFieldset);
     for (let i = 0; i <= 3; i++) {
         const taskFlagInputLabel = document.createElement('Label');

@@ -15,10 +15,13 @@ export default function generateSidebar() {
 
 
 function createNewProjectButtonDiv() {
-    let newProjectButton = document.createElement('button')
-    newProjectButton.setAttribute('id', 'new-project-button')
-    newProjectButton.addEventListener('click', () => askForNewProjectName())
-    return newProjectButton
+    let newProjectButton = document.createElement('button');
+    let newProjectButtonTitle = document.createElement('p');
+    newProjectButtonTitle.innerText = 'Create New Project';
+    newProjectButton.append(newProjectButtonTitle);
+    newProjectButton.setAttribute('id', 'new-project-button');
+    newProjectButton.addEventListener('click', () => askForNewProjectName());
+    return newProjectButton;
 }
 
 function generateProjectListDiv() {

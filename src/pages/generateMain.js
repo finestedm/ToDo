@@ -19,6 +19,9 @@ export function appendSelectedProjectsTasksToMain(projectObject) {  //entire pro
     }
 
     const newTaskButton = document.createElement('button');
+    const newTaskButtonTitle = document.createElement('p');
+    newTaskButtonTitle.innerText = '+ Add new task';
+    newTaskButton.append(newTaskButtonTitle);
     newTaskButton.setAttribute('id', 'new-task-button');
     newTaskButton.addEventListener('click', () => showTaskEditWindow({}, projectObject));
     listOfTasks.append(newTaskButton)

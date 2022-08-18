@@ -21,6 +21,7 @@ export function changeProjectHeaderTitle(projectObject) {
         const numberOfActiveTasks = getActiveTaskCount(projectObject);
         const numberWord = (numberOfActiveTasks === 1) ? 'is' : 'are';
         const theString = `This project contains ${(projectObject.taskList.length)} tasks, from which ${numberOfActiveTasks} ${numberWord} still active.`;
+
         projectTitleCounter.innerHTML = theString
     } else {
         projectTitleHeader.innerText = projectObject; // if we send string from 7days list then projectObject is not really an object...
