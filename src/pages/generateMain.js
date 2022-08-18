@@ -1,5 +1,6 @@
-import { Task, removeTask, createNewTask, createTaskDiv } from './tasks'
+import { Task, removeTask, createNewTask, createTaskDiv, showTaskEditWindow } from './tasks'
 import { removeProjectTasksFromMain, projectList } from './projects'
+import { changeProjectHeaderTitle } from './generateProjectTitleHeader'
 import { } from './universalDOMmanipulations'
 
 export default function generateMain() {
@@ -18,11 +19,16 @@ export function appendSelectedProjectsTasksToMain(projectObject) {  //entire pro
     }
 
     const newTaskButton = document.createElement('button');
+    const newTaskButtonTitle = document.createElement('p');
+    newTaskButtonTitle.innerText = '+ Add new task';
+    newTaskButton.append(newTaskButtonTitle);
     newTaskButton.setAttribute('id', 'new-task-button');
-    newTaskButton.addEventListener('click', () => createNewTask(projectObject));
+    newTaskButton.addEventListener('click', () => showTaskEditWindow({}, projectObject));
     listOfTasks.append(newTaskButton)
 
     main.append(listOfTasks);
+
+    changeProjectHeaderTitle(projectObject)
 }
 
 
@@ -38,6 +44,7 @@ export function checkIfSelectedProjectIsAlreadyShown(projectToCheck) {
     return ((currentlySelectedProject == projectToCheck) ? true : false)
 
 }
+
 
 
 

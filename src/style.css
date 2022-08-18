@@ -131,16 +131,33 @@ table {
 
 /*  */
 
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 *,
 body {
-    font-family: 'Poppins', sans-serif;
-    color: white
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+
+:root {
+    --text-color-black: black;
+    --background-white: white;
+    --background-gray: hsl(260, 20%, 97%);
+    --background-dark: #14121e;
+    --text-color-90: #333333;
+    --text-color-70: #868686;
+    --text-color-10: hsl(0, 0%, 100%);
+    --text-color-20: hsl(234, 10%, 90%);
+    --text-color-30: #5d5d74;
+    --button-hover: #cfd2ea;
+    --box-shadow: rgba(0, 0, 0, 0.22);
+    --accent-color-green: #d7f7dc;
+    --accent-color-purple: #c4c7fa;
+
 }
 
 button {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 #body {
@@ -153,15 +170,15 @@ button {
     height: 100vh;
     max-height: 100vh;
     width: 100%;
-    background-color: #19212e;
+    background-color: var(--background-gray);
 }
 
 .main-window {
     display: grid;
     grid-template-areas:
-        "header header"
+        "header project-title"
         "sidebar main";
-    grid-template-rows: 5rem 1fr;
+    grid-template-rows: 7rem 1fr;
     grid-template-columns: 15rem 1fr;
     height: 100%;
 }
@@ -171,14 +188,22 @@ button {
     display: flex;
     flex-direction: column;
     /* height: 100%; */
-    padding: 1rem;
+    padding: 1.5rem 0 1.5rem 1.5rem;
     overflow: hidden;
-    background-color: hsl(217, 30%, 15%);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    background-color: var(--background-dark);
 }
 
-.sidebar>h2 {
-    font-size: 1.35rem;
-    margin: 1rem 0 .5rem 0;
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar .sidebar-lists-header {
+    font-size: 0.8rem;
+    color: var(--text-color-30);
+    word-spacing: 1px;
+    font-weight: 700;
 }
 
 .sidebar>ul button {
@@ -186,37 +211,60 @@ button {
     margin: .25rem;
 }
 
-.sidebar>ul button:first-child {
+.sidebar>ul h3 {
+    color: var(--text-color-20);
+    font-size: 1rem;
+    margin: .25rem;
     background-color: transparent;
+    transition: all .2s ease-in-out;
+
 }
 
 .active-task-counter {
     margin-right: auto;
-    color: #4fc97e;
-    font-weight: 700;
-    font-size: .7rem;
+    background-color: var(--button-hover);
+    border-radius: 1.5rem;
+    padding: .2rem .3rem;
+    text-align: center;
+    font-weight: 900;
+    font-size: .75rem;
     align-self: start;
-    /* this color should be changing according to number of tasks */
+    position: relative;
+    top: 2px
+        /* this color should be changing according to number of tasks */
 }
 
-#project-list>li {
+#project-list>li,
+#other-task-lists>li {
     display: flex;
+    box-sizing: border-box;
     align-items: center;
-    padding: 1rem .5rem;
-    background-color: #ffffff00;
+    padding: .5rem .2rem;
     transition: all .2s ease-in-out;
-    border: 1px solid #131a24;
-    margin: .5rem 0;
-    border-radius: .25rem;
+    margin: .8rem 0 .8rem 1rem;
+    /* border-radius: .4rem; */
 }
 
-#project-list>li:hover {
-    background-color: #ffffff15;
+#project-list>li:hover,
+#other-task-lists>li:hover {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(76, 78, 108, 0.3267507686668417) 15%, rgba(76, 78, 108, 1) 97%, rgb(218, 218, 224) 98%, rgb(218, 218, 224) 100%);
+}
+
+#project-list>li:hover h3,
+#other-task-lists>li:hover h3 {
+    color: white
 }
 
 .sidebar>ul {
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     flex: 0 1 auto;
+    margin-bottom: 2.5rem;
+}
+
+.sidebar>ul::-webkit-scrollbar {
+    display: none;
 }
 
 button.task,
@@ -238,84 +286,196 @@ li:hover button.project:hover {
     background-size: 75%;
 }
 
-#new-project-button,
-#new-task-button {
+#new-project-button {
     flex: 1 0 50px;
     background-color: transparent;
     transition: all .2s ease-in-out;
-    background: url(./images/plus.svg) no-repeat center;
-    background-size: 2rem;
     border: none;
-    border: 1px solid #131a24;
-    margin: .5rem 0;
+    color: var(--button-hover);
+    margin: .5rem 2.5rem .5rem .5rem;
     border-radius: .25rem;
     opacity: .25;
 }
 
-#new-project-button:hover,
-#new-task-button:hover {
+#new-project-button:hover {
     opacity: 1;
-    background-color: #ffffff15;
+    background-color: var(--button-hover);
+    color: var(--text-color-black);
     background-size: 2.5rem;
 }
 
-main>ul {
-    display: flex;
-    flex-direction: column;
-    margin: 1rem;
-
-}
-
-main>ul>li {
-    padding: 1rem .5rem;
-    display: flex;
-    justify-content: center;
-    border: 1px solid #131a24;
-    border-radius: .25rem;
-    margin: .5rem 0;
-}
-
-main>ul>li:hover {
-    background-color: #ffffff15;
-}
-
-main>ul>li>button:nth-child(2) {
-    margin-right: auto;
-    flex: 1 0 auto;
+#new-task-button {
     background-color: transparent;
+    transition: all .2s ease-in-out;
+    background-color: var(--accent-color-purple);
     border: none;
+    padding: 1rem .5rem;
+    margin: .5rem 0;
+    border-radius: .4rem;
+    height: 100%;
+    box-shadow: 0 0 10px #14121e0e;
+}
+
+#new-task-button:hover {
+    opacity: 1;
+    background-color: var(--button-hover);
+    background-size: 2.5rem;
+    box-shadow: 0 0 10px var(--box-shadow);
 
 }
 
-main>ul>li>button:not(:first-child) {
+main #task-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+main #task-list>li {
+    box-sizing: border-box;
+    padding: 1rem;
+    display: grid;
+    grid-template-areas:
+        "complete-input title duedate "
+        "button1 content content"
+        "button2 content content";
+    grid-template-columns: 30px 1fr 10ch;
+    align-items: center;
+    border-radius: .5rem;
+    height: 100%;
+    background-color: var(--background-white);
+    transition: all .2s ease-out;
+    border-left: 8px solid;
+    box-shadow: 0 0 10px #14121e0e
+}
+
+main #task-list>li.flag-0 {
+    border-left-color: transparent;
+}
+
+main #task-list>li.flag-1 {
+    border-left-color: #f9c72a;
+}
+
+main #task-list>li.flag-2 {
+    border-left-color: #f15449;
+}
+
+main #task-list>li.flag-3 {
+    border-left-color: #e01d4f;
+}
+
+main #task-list>li:hover {
+    box-shadow: 0 0 10px var(--box-shadow);
+}
+
+main>ul>li>.complete-input {
+    grid-area: complete-input;
+    grid-row: 1 / span 1;
+    scale: 1
+}
+
+main>ul>li>.complete-input:hover {
+    scale: 1.5
+}
+
+main>ul>li>h3 {
+    grid-area: title;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    line-height: 1.5rem;
+
+}
+
+main>ul>li time {
+    grid-area: duedate;
+    font-size: .8rem;
+    font-style: italic;
+}
+
+main>ul>li>p {
+    grid-area: content;
+    font-size: 1rem;
+    margin-right: auto;
+    margin-left: 1rem;
+    font-size: .8rem;
+    line-height: 1.5rem;
+    letter-spacing: .2px;
+}
+
+main>ul>li>button {
+    grid-area: button;
     margin-right: auto;
     margin: .25rem;
     border: none;
 }
 
+main>ul>li .task.edit-button {
+    grid-area: button1;
+}
+
+main>ul>li .task.delete-button {
+    grid-area: button2;
+}
+
 header {
     grid-area: header;
-    width: 100%;
-    background-color: #232e41;
+    background-color: var(--background-dark);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    box-shadow: 0 10px 25px #0000002c;
-    font-size: 2.4rem;
-    letter-spacing: -3px;
-    box-shadow: 0 7px 10px #00000015;
-    z-index: 1;
+    font-size: 1.5rem;
+    letter-spacing: -2px;
+    position: relative;
+    color: var(--text-color-10)
 }
+
+header:after {
+    content: "";
+    background: #ffffff10;
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    height: 2px;
+    width: 80%;
+}
+
 
 #header--logo {
-    fill: white;
-    height: 2.4rem;
+    height: 1.5rem;
+}
+
+#main--project-title-header {
+    grid-area: project-title;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 2.5rem;
+    border-bottom: 1px solid var(--text-color-20)
+}
+
+#main--project-title-header h1 {
+    font-size: 2.6rem;
+    line-height: 2.5rem;
+    letter-spacing: -2px;
+    font-weight: 600;
+    color: var(--text-color-90);
+    margin-bottom: .75rem;
+}
+
+#main--project-title-header>span {
+    font-size: 1rem;
+    color: var(--text-color-70);
 
 }
+
 
 main {
     grid-area: main;
+    margin: 1rem 2.5rem;
 }
 
 button.project,
@@ -338,4 +498,173 @@ button.task {
 .due-button {
     background: url('./images/calendar.svg') center;
     background-size: 50%;
+}
+
+#edit-window-holder {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: #00000044;
+}
+
+#edit-window {
+    background-color: var(--background-white);
+    width: clamp(350px, 50%, 700px);
+    padding: 2rem;
+    border-radius: .5rem;
+    ;
+}
+
+#edit-window input,
+#edit-window select,
+#edit-window textarea {
+    position: relative;
+    appearance: none;
+    border: 1px solid #f6f4f5;
+    background-color: var(--background-gray);
+    padding: 1rem;
+    border-radius: .5rem;
+    transition: all .1s ease-out;
+    resize: vertical;
+    rows: '2'
+}
+
+#edit-window input:hover,
+#edit-window select:hover,
+#edit-window input:focus,
+#edit-window select:focus {
+    border: 1px solid var(--accent-color-purple);
+    background-color: var(--background-gray);
+
+}
+
+#edit-window #list-of-task-parameters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#edit-window #list-of-task-parameters>li {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+#edit-window #list-of-task-parameters>li>label,
+#edit-window #list-of-task-parameters>li legend {
+    font-size: .8rem;
+    font-weight: 700;
+    word-spacing: 3px;
+    margin-bottom: .4rem;
+
+}
+
+#edit-window #submit-and-cancel-button-holder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#edit-window #submit-and-cancel-button-holder>button {
+    width: 100%;
+    appearance: none;
+    font-size: 1.25rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: none;
+    border-radius: .25rem;
+    transition: all .15s ease-out;
+}
+
+#edit-window #submit-and-cancel-button-holder #submit-button {
+    background-color: var(--accent-color-green);
+    letter-spacing: -1px;
+    font-weight: 500;
+    color: var(--background-dark)
+}
+
+#edit-window #submit-and-cancel-button-holder #submit-button:hover {
+    /* border: 3px solid #187254; */
+    box-shadow: 0px 0px 10px #b6eebd;
+}
+
+#edit-window #submit-and-cancel-button-holder #cancel-button {
+    background-color: #c4c4d1;
+    letter-spacing: -1px;
+    color: rgb(0, 0, 0)
+}
+
+#edit-window #submit-and-cancel-button-holder #cancel-button:hover {
+    /* border: 3px solid #187254; */
+    box-shadow: 0px 0px 10px #bdbdbd;
+}
+
+
+/* #edit-window input {
+    appearance: none;
+    border: 1px solid #131a24;
+    background-color: #131a24;
+} */
+
+#list-of-task-parameters fieldset {
+    background-color: var(--background-gray);
+    border: 1px solid #f6f4f5;
+    border-radius: 5rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#list-of-task-parameters fieldset label {
+    flex: 0 1 70px;
+    padding: 1rem;
+    border-radius: 100%;
+    border: 1px solid transparent;
+    transition: all .2s ease-out;
+
+}
+
+#list-of-task-parameters fieldset label:hover,
+#list-of-task-parameters fieldset label:focus {
+    border: 1px solid var(--accent-color-purple);
+    background-color: rgb(231, 231, 231);
+
+}
+
+#list-of-task-parameters fieldset input:checked+label {
+    border: 1px solid var(--accent-color-purple);
+    background-color: var(--background-gray);
+}
+
+fieldset>input {
+    display: none;
+}
+
+#list-of-task-parameters fieldset img {
+    width: 100%;
+    height: 100%;
+}
+
+#flag-0 {
+    filter: brightness(0) saturate(100%) invert(25%) sepia(11%) saturate(1284%) hue-rotate(180deg) brightness(96%) contrast(86%);
+}
+
+#flag-1 {
+    filter: brightness(0) saturate(100%) invert(76%) sepia(37%) saturate(926%) hue-rotate(349deg) brightness(103%) contrast(95%);
+}
+
+#flag-2 {
+    filter: brightness(0) saturate(100%) invert(42%) sepia(74%) saturate(2353%) hue-rotate(336deg) brightness(101%) contrast(89%);
+}
+
+#flag-3 {
+    filter: brightness(0) saturate(100%) invert(19%) sepia(87%) saturate(4103%) hue-rotate(334deg) brightness(90%) contrast(94%);
 }
