@@ -40,11 +40,3 @@ export function generateHeader() {
 export function setLocalStorage() {
     localStorage.setItem('projectList', JSON.stringify(projectList))
 }
-
-
-(function timeDifference() {
-    const dateOne = 1661212800000
-    const dateTwo = (new Date())
-
-    console.log(differenceInDays(dateOne, dateTwo))
-})()
